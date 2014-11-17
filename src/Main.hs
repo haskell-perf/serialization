@@ -88,8 +88,8 @@ instance (C.Serialize a, NFData a) => Serialize Cereal a where
     deserialize _ = either error (return . force) . C.decode
 
 instance (NFData a, Typeable a) => Serialize Packman a where
-    serialize   _ = fmap (force . LBS.toStrict . B.encode) . P.trySerialize
-    deserialize _ = either error (fmap force . P.deserialize) . B.decode . LBS.fromStrict
+    serialize   _ = fmap (force . LBS.toStrict . B.encode) . flip P.trySerializeWith (1000 * 2^20)
+    deserialize _ = fmap force . P.deserialize . B.decode . LBS.fromStrict
 
 prop :: Serialize lib (BinTree Int) => lib -> Property
 prop lib = forAll arbitrary (ioProperty . test)
@@ -102,30 +102,6 @@ prop lib = forAll arbitrary (ioProperty . test)
 
 runQC :: Serialize lib (BinTree Int) => lib -> IO ()
 runQC = quickCheckWith stdArgs{maxSuccess=1000} . prop
-
-bug :: IO ()
-bug = do
-    let ex = Tree (Leaf 10) (Leaf 20) :: BinTree Int
-    -- this works
-    -- P.encodeToFile "test" ex
-    -- tree <- P.decodeFromFile "test" :: IO (BinTree Int)
-    -- print tree
-
-    -- this works
-    -- s <- P.trySerialize ex
-    -- d <- P.deserialize s
-    -- print d
-
-    -- this doesn't work
-    s <- fmap B.encode . P.trySerialize $ (1 :: Int)
-    print (LBS.unpack s)
-    d <- (either error P.deserialize . B.decode $ s) :: IO Int
-    print d
-
-    -- this doesn't work
-    -- b <- serialize Packman ex
-    -- b' <- deserialize Packman b :: IO (BinTree Int)
-    -- print b'
 
 generateBalancedTree :: Word32 -> IO (BinTree Int)
 generateBalancedTree 0 = Leaf <$> randomIO
@@ -140,15 +116,19 @@ runBench = do
   defaultMainWith defaultConfig{forceGC=True, verbosity=Verbose}
     [ bgroup "binary"
       [ bench "serialize" $ nfIO $ serialize Binary tree
-      , bench "serialize + deserialize" $
-          nfIO (serialize Binary tree >>= deserialize Binary :: IO (BinTree Int))
+      , bench "serialize + deserialize" $ nfIO
+          (serialize Binary tree >>= deserialize Binary :: IO (BinTree Int))
       ]
     , bgroup "cereal"
       [ bench "serialize" $ nfIO $ serialize Cereal tree
       , bench "serialize + deserialize" $ nfIO
           (serialize Cereal tree >>= deserialize Cereal :: IO (BinTree Int))
       ]
-    , bgroup "packman" []
+    , bgroup "packman"
+      [ bench "serialize" $ nfIO $ serialize Packman tree
+      , bench "serialize + deserialize" $ nfIO
+          (serialize Packman tree >>= deserialize Packman :: IO (BinTree Int))
+      ]
     ]
 
 main :: IO ()
@@ -156,7 +136,5 @@ main = do
     -- runQC Binary
     -- runQC Cereal
     -- runQC Packman
-
-    -- bug
 
     runBench
