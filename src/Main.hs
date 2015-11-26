@@ -3,28 +3,24 @@
 
 module Main where
 
-import           Control.Applicative
 import           Control.DeepSeq
-import qualified Data.ByteString           as BS
-import qualified Data.ByteString.Lazy      as LBS
+import qualified Data.ByteString      as BS
+import qualified Data.ByteString.Lazy as LBS
 import           Data.Typeable
 import           Data.Word
 import           System.IO
 import           System.Random
 
 -- Serialization libs
-import qualified Data.Binary               as B
-import qualified Data.Serialize            as C
-import qualified GHC.Packing               as P
+import qualified Data.Binary          as B
+import qualified Data.Serialize       as C
+import qualified GHC.Packing          as P
 
 -- Testing and random data generation
 import           Test.QuickCheck
-import           Test.QuickCheck.Arbitrary
-import           Test.QuickCheck.Gen
 
 -- Benchmarks
 import           Criterion.Main
-import           Criterion.Types
 
 data BinTree a = Tree (BinTree a) (BinTree a) | Leaf a
   deriving (Show, Eq, Typeable)
@@ -54,6 +50,7 @@ instance B.Binary a => B.Binary (BinTree a) where
     case t of
       0 -> Leaf <$> B.get
       1 -> Tree <$> B.get <*> B.get
+      _ -> error "Binary.get for BinTree"
 
 instance C.Serialize a => C.Serialize (BinTree a) where
   put (Leaf a) = do
@@ -70,6 +67,7 @@ instance C.Serialize a => C.Serialize (BinTree a) where
     case t of
       0 -> Leaf <$> C.get
       1 -> Tree <$> C.get <*> C.get
+      _ -> error "Serialize.get for BinTree"
 
 data Binary = Binary
 data Cereal = Cereal
@@ -88,7 +86,8 @@ instance (C.Serialize a, NFData a) => Serialize Cereal a where
     deserialize _ = either error (return . force) . C.decode
 
 instance (NFData a, Typeable a) => Serialize Packman a where
-    serialize   _ = fmap (force . LBS.toStrict . B.encode) . flip P.trySerializeWith (1000 * 2^20)
+    serialize   _ =
+      fmap (force . LBS.toStrict . B.encode) . flip P.trySerializeWith (1000 * 2^(20 :: Int))
     deserialize _ = fmap force . P.deserialize . B.decode . LBS.fromStrict
 
 prop :: Serialize lib (BinTree Int) => lib -> Property
