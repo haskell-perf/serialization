@@ -1,0 +1,3 @@
+[submodule "packman"]
+	path = packman
+	url = https://github.com/jberthold/packman
