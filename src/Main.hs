@@ -8,7 +8,6 @@ import qualified Data.ByteString      as BS
 import qualified Data.ByteString.Lazy as LBS
 import           Data.Typeable
 import           Data.Word
-import           System.IO
 import           System.Random
 
 -- Serialization libs
@@ -107,26 +106,28 @@ generateBalancedTree 0 = Leaf <$> randomIO
 generateBalancedTree n = Tree <$> generateBalancedTree (n-1) <*> generateBalancedTree (n-1)
 
 runBench :: IO ()
-runBench = do
-  putStr "Generating tree... "
-  hFlush stdout
-  tree <- force <$> generateBalancedTree 22
-  putStrLn "Done."
-  defaultMain
-    [ bgroup "binary"
-      [ bench "serialize" $ nfIO $ serialize Binary tree
-      , bench "serialize + deserialize" $ nfIO
-          (serialize Binary tree >>= deserialize Binary :: IO (BinTree Int))
-      ]
-    , bgroup "cereal"
-      [ bench "serialize" $ nfIO $ serialize Cereal tree
-      , bench "serialize + deserialize" $ nfIO
-          (serialize Cereal tree >>= deserialize Cereal :: IO (BinTree Int))
-      ]
-    , bgroup "packman"
-      [ bench "serialize" $ nfIO $ serialize Packman tree
-      , bench "serialize + deserialize" $ nfIO
-          (serialize Packman tree >>= deserialize Packman :: IO (BinTree Int))
+runBench = defaultMain
+
+    -- Previously we had `serialize >>= deserialize` benchmarks here, but I
+    -- removed them because with '-O2' binary had a weird performance burst that
+    -- showed that `serialize` takes same amount of time with `serialize >>=
+    -- deserialize`. I don't understand how can that happen, but in practice we
+    -- never serialize only to immediately deserialize. So hopefully this new
+    -- version is more useful and accurate.
+
+    [ env (generateBalancedTree 22) $ \tree ->
+        bgroup "serialization"
+          [ bench "binary"  $ nfIO $ serialize Binary tree
+          , bench "cereal"  $ nfIO $ serialize Cereal tree
+          , bench "packman" $ nfIO $ serialize Packman tree
+          ]
+    , bgroup "deserialization"
+      [ env (generateBalancedTree 22 >>= serialize Binary) $ \bs ->
+          bench "binary" $ whnfIO (deserialize Binary bs :: IO (BinTree Int))
+      , env (generateBalancedTree 22 >>= serialize Cereal) $ \bs ->
+          bench "cereal" $ whnfIO (deserialize Cereal bs :: IO (BinTree Int))
+      , env (generateBalancedTree 22 >>= serialize Packman) $ \bs ->
+          bench "packman" $ whnfIO (deserialize Packman bs :: IO (BinTree Int))
       ]
     ]
 
