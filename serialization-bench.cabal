@@ -16,15 +16,16 @@ executable serialization-bench
   main-is:             Main.hs
   -- other-modules:
   -- other-extensions:
-  build-depends:       base >=4.7 && <4.8,
-                       binary >=0.7.1 && <0.7.3,
-                       bytestring,
-                       cereal >=0.4.1 && <0.4.2,
-                       criterion,
-                       deepseq,
-                       packman,
-                       QuickCheck,
-                       random
+  build-depends:
+    base               >=4.8   && <4.9,
+    binary             >=0.7.6 && <0.8,
+    bytestring,
+    cereal             >=0.5.1 && <0.6,
+    criterion,
+    deepseq,
+    packman,
+    QuickCheck,
+    random
   hs-source-dirs:      src
   default-language:    Haskell2010
   ghc-options:         -Wall
