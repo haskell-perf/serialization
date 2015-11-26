@@ -1,66 +1,63 @@
+This is a micro-benchmark that compares `binary`, `cereal` and `packman`
+serialization and deserialization performances.
+
+`packman` is not on Hackage, so we include it here as a Git submodule. Make sure
+to initialize submodules and add `packman` as source in your Cabal sandbox.
+Something like this should work:
+
 ```
-Generating tree... Done.
-benchmarking binary/serialize
-analysing with 1000 resamples
-measurement overhead 507.5 ns
-bootstrapping with 42 of 339 samples (12%)
-time                 1.936 ns   (1.933 ns .. 1.939 ns)
+$ git submodule update --init --recursive
+$ cabal sandbox init
+$ cabal sandbox add-source packman/
+$ cabal install
+```
+
+## Results
+
+Versions:
+
+- binary: 0.7.6.1
+- cereal: 0.5.1.0
+- packman: 0.2
+
+```
+benchmarking serialization/binary
+time                 1.934 ns   (1.928 ns .. 1.942 ns)
                      1.000 R²   (1.000 R² .. 1.000 R²)
-mean                 1.937 ns   (1.934 ns .. 1.942 ns)
-std dev              13.22 ps   (9.122 ps .. 22.00 ps)
-found 2 outliers among 42 samples (4.8%)
-  1 (2.4%) high mild
-  1 (2.4%) high severe
-variance introduced by outliers: 1% (slightly inflated)
+mean                 1.938 ns   (1.932 ns .. 1.943 ns)
+std dev              18.99 ps   (16.36 ps .. 22.03 ps)
+variance introduced by outliers: 11% (moderately inflated)
 
-benchmarking binary/serialize + deserialize
-measurement took 39.03 s
-analysing with 1000 resamples
-bootstrapping with 3 of 4 samples (75%)
-time                 2.629 s    (2.366 s .. NaN s)
-                     0.999 R²   (0.997 R² .. 1.000 R²)
-mean                 2.617 s    (2.589 s .. 2.663 s)
-std dev              40.69 ms   (0.0 s .. 42.97 ms)
-variance introduced by outliers: 19% (moderately inflated)
-
-benchmarking cereal/serialize
-analysing with 1000 resamples
-bootstrapping with 42 of 339 samples (12%)
-time                 1.932 ns   (1.930 ns .. 1.934 ns)
+benchmarking serialization/cereal
+time                 1.929 ns   (1.922 ns .. 1.937 ns)
                      1.000 R²   (1.000 R² .. 1.000 R²)
-mean                 1.932 ns   (1.930 ns .. 1.935 ns)
-std dev              8.964 ps   (7.190 ps .. 11.75 ps)
-found 2 outliers among 42 samples (4.8%)
-  2 (4.8%) high mild
-variance introduced by outliers: 0% (unaffected)
+mean                 1.922 ns   (1.917 ns .. 1.927 ns)
+std dev              17.08 ps   (14.02 ps .. 20.56 ps)
 
-benchmarking cereal/serialize + deserialize
-measurement took 23.59 s
-analysing with 1000 resamples
-bootstrapping with 3 of 4 samples (75%)
-time                 1.571 s    (1.347 s .. 1.807 s)
-                     0.997 R²   (0.989 R² .. 1.000 R²)
-mean                 1.594 s    (1.552 s .. 1.628 s)
-std dev              54.42 ms   (0.0 s .. 59.41 ms)
+benchmarking serialization/packman
+time                 7.980 s    (NaN s .. 8.323 s)
+                     1.000 R²   (0.999 R² .. 1.000 R²)
+mean                 8.307 s    (8.221 s .. 8.351 s)
+std dev              74.09 ms   (0.0 s .. 76.94 ms)
 variance introduced by outliers: 19% (moderately inflated)
 
-benchmarking packman/serialize
-measurement took 105.9 s
-analysing with 1000 resamples
-bootstrapping with 3 of 4 samples (75%)
-time                 6.990 s    (6.392 s .. 7.730 s)
-                     0.999 R²   (0.996 R² .. 1.000 R²)
-mean                 6.856 s    (6.717 s .. 6.940 s)
-std dev              128.3 ms   (0.0 s .. 146.2 ms)
+benchmarking deserialization/binary
+time                 1.906 ns   (1.905 ns .. 1.907 ns)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 1.906 ns   (1.905 ns .. 1.907 ns)
+std dev              3.480 ps   (2.746 ps .. 4.998 ps)
+
+benchmarking deserialization/cereal
+time                 704.5 ms   (600.7 ms .. 787.5 ms)
+                     0.998 R²   (NaN R² .. 1.000 R²)
+mean                 741.0 ms   (733.5 ms .. 747.0 ms)
+std dev              9.351 ms   (0.0 s .. 10.38 ms)
 variance introduced by outliers: 19% (moderately inflated)
 
-benchmarking packman/serialize + deserialize
-measurement took 175.1 s
-analysing with 1000 resamples
-bootstrapping with 3 of 4 samples (75%)
-time                 11.74 s    (11.42 s .. 11.95 s)
-                     1.000 R²   (1.000 R² .. NaN R²)
-mean                 11.71 s    (11.65 s .. 11.74 s)
-std dev              56.65 ms   (0.0 s .. 64.46 ms)
-variance introduced by outliers: 19% (moderately inflated)
+benchmarking deserialization/packman
+time                 434.1 ms   (34.34 ms .. 892.5 ms)
+                     0.882 R²   (0.700 R² .. 1.000 R²)
+mean                 539.0 ms   (480.4 ms .. 584.8 ms)
+std dev              70.85 ms   (0.0 s .. 79.31 ms)
+variance introduced by outliers: 24% (moderately inflated)
 ```
