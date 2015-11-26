@@ -113,7 +113,7 @@ runBench = do
   hFlush stdout
   tree <- force <$> generateBalancedTree 22
   putStrLn "Done."
-  defaultMainWith defaultConfig{forceGC=True, verbosity=Verbose}
+  defaultMain
     [ bgroup "binary"
       [ bench "serialize" $ nfIO $ serialize Binary tree
       , bench "serialize + deserialize" $ nfIO
