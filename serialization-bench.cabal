@@ -19,6 +19,7 @@ executable serialization-bench
   build-depends:
     base               >=4.8   && <4.9,
     binary             >=0.7.6 && <0.8,
+    binary-serialise-cbor,
     bytestring,
     cereal             >=0.5.1 && <0.6,
     criterion,
