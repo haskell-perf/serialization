@@ -17,8 +17,8 @@ executable serialization-bench
   -- other-modules:
   -- other-extensions:
   build-depends:
-    base               >=4.8   && <4.9,
-    binary             >=0.7.6 && <0.8,
+    base               >=4.9   && <4.10,
+    binary             >=0.8   && <0.9,
     binary-serialise-cbor,
     bytestring,
     cereal             >=0.5.1 && <0.6,
