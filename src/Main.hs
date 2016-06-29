@@ -96,20 +96,28 @@ class Serialize lib a where
     deserialize :: lib -> BS.ByteString -> IO a
 
 instance (B.Binary a, NFData a) => Serialize Binary a where
+    {-# NOINLINE serialize #-}
     serialize   _ = return . force . LBS.toStrict . B.encode
+    {-# NOINLINE deserialize #-}
     deserialize _ = return . force . B.decode . LBS.fromStrict
 
 instance (C.Serialize a, NFData a) => Serialize Cereal a where
+    {-# NOINLINE serialize #-}
     serialize   _ = return . force . C.encode
+    {-# NOINLINE deserialize #-}
     deserialize _ = either error (return . force) . C.decode
 
 instance (NFData a, Typeable a) => Serialize Packman a where
+    {-# NOINLINE serialize #-}
     serialize   _ =
       fmap (force . LBS.toStrict . B.encode) . flip P.trySerializeWith (1000 * 2^(20 :: Int))
+    {-# NOINLINE deserialize #-}
     deserialize _ = fmap force . P.deserialize . B.decode . LBS.fromStrict
 
 instance (CBOR.Serialise a, NFData a) => Serialize CBOR a where
+    {-# NOINLINE serialize #-}
     serialize _   = return . force . LBS.toStrict . CBOR.serialise
+    {-# NOINLINE deserialize #-}
     deserialize _ = return . force . CBOR.deserialise . LBS.fromStrict
 
 prop :: Serialize lib (BinTree Int) => lib -> Property
@@ -145,29 +153,23 @@ runBench = do
   performMajorGC
 
   defaultMain
-    -- Previously we had `serialize >>= deserialize` benchmarks here, but I
-    -- removed them because with '-O2' binary had a weird performance burst that
-    -- showed that `serialize` takes same amount of time with `serialize >>=
-    -- deserialize`. I don't understand how can that happen, but in practice we
-    -- never serialize only to immediately deserialize. So hopefully this new
-    -- version is more useful and accurate.
     [ env (generateBalancedTree 22) $ \tree ->
         bgroup "serialization"
-          [ bench "binary"  $ nfIO $ serialize Binary tree
-          , bench "cereal"  $ nfIO $ serialize Cereal tree
-          , bench "packman" $ nfIO $ serialize Packman tree
+          [ bench "binary"      $ nfIO $ serialize Binary tree
+          , bench "cereal"      $ nfIO $ serialize Cereal tree
+          , bench "packman"     $ nfIO $ serialize Packman tree
           , bench "binary-CBOR" $ nfIO $ serialize CBOR tree
           ]
     , bgroup "deserialization"
-      [ env (generateBalancedTree 22 >>= serialize Binary) $ \bs ->
-          bench "binary" $ whnfIO (deserialize Binary bs :: IO (BinTree Int))
-      , env (generateBalancedTree 22 >>= serialize Cereal) $ \bs ->
-          bench "cereal" $ whnfIO (deserialize Cereal bs :: IO (BinTree Int))
-      , env (generateBalancedTree 22 >>= serialize Packman) $ \bs ->
-          bench "packman" $ whnfIO (deserialize Packman bs :: IO (BinTree Int))
-      , env (generateBalancedTree 22 >>= serialize CBOR) $ \bs ->
-          bench "binary-CBOR" $ whnfIO (deserialize CBOR bs :: IO (BinTree Int))
-      ]
+        [ env (generateBalancedTree 22 >>= serialize Binary) $ \bs ->
+            bench "binary" $ whnfIO (deserialize Binary bs :: IO (BinTree Int))
+        , env (generateBalancedTree 22 >>= serialize Cereal) $ \bs ->
+            bench "cereal" $ whnfIO (deserialize Cereal bs :: IO (BinTree Int))
+        , env (generateBalancedTree 22 >>= serialize Packman) $ \bs ->
+            bench "packman" $ whnfIO (deserialize Packman bs :: IO (BinTree Int))
+        , env (generateBalancedTree 22 >>= serialize CBOR) $ \bs ->
+            bench "binary-CBOR" $ whnfIO (deserialize CBOR bs :: IO (BinTree Int))
+        ]
     ]
 
 main :: IO ()
