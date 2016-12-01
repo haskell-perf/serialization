@@ -14,7 +14,7 @@ cabal-version:       >=1.10
 
 executable serialization-bench
   main-is:             Main.hs
-  -- other-modules:
+  other-modules: Dataset
   -- other-extensions:
   build-depends:
     base               >=4.8   && <4.10,
@@ -23,10 +23,15 @@ executable serialization-bench
     bytestring,
     cereal             >=0.5.1 && <0.6,
     criterion,
+    datasets,
+    flat,
     deepseq,
     packman,
     QuickCheck,
-    random
+    random,
+    statistics,
+    store
   hs-source-dirs:      src
   default-language:    Haskell2010
-  ghc-options:         -Wall -O2 -ddump-simpl -dsuppress-idinfo -ddump-to-file
+  ghc-options:         -Wall -O2
+  --ghc-options:         -Wall -O2 -ddump-simpl -dsuppress-idinfo -ddump-to-file

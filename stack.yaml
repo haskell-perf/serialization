@@ -10,6 +10,13 @@ resolver: lts-6.26
 packages:
 - '.'
 
+#- ../../flat
+
+- location:
+   git: https://github.com/tittoassini/flat
+   commit: 9734f1b5702d531483b374b541d5fb8f235875cf
+  extra-dep: true
+
 - location:
    git: https://github.com/well-typed/binary-serialise-cbor
    commit: 1e11ea5cc7810d241b2fe1bca0ed435baa4d4371
@@ -22,3 +29,11 @@ flags:
 extra-deps:
 - packman-0.3.0
 - binary-0.8.4.1
+- cereal-0.5.4.0
+- store-0.3
+- store-core-0.3
+- th-utilities-0.2.0.1
+- datasets-0.2.1
+- criterion-1.1.4.0
+- code-page-0.1.1
+- optparse-applicative-0.13.0.0
