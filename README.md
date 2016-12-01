@@ -28,7 +28,7 @@ git clone https://github.com/tittoassini/serialization-bench;cd serialization-be
 
 ## Full Results
 
-[Full Criterion Report](report.html).
+[Full Criterion Report](http://htmlpreview.github.io/?https://github.com/tittoassini/serialization-bench/blob/master/report.html).
 
 ## Summary Results
 

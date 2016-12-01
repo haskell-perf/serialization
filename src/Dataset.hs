@@ -65,10 +65,10 @@ instance CBOR.Serialise IrisClass
 instance F.Flat IrisClass
 instance S.Store IrisClass
 
-irisData = by100 iris
-carsData = by100 <$> getDataset car
+irisData = by 2000 iris
+carsData = by 200 <$> getDataset car
 
-by100 = concat . replicate 100
+by n = concat . replicate n
 
 t = do
    -- The Iris data set is embedded
