@@ -1,3 +1,4 @@
+{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE DeriveAnyClass     #-}
 {-# LANGUAGE DeriveGeneric      #-}
 {-# LANGUAGE StandaloneDeriving #-}
@@ -48,6 +49,7 @@ instance B.Binary Car
 instance C.Serialize Car
 instance CBOR.Serialise Car
 instance F.Flat Car
+instance {-# OVERLAPPING #-} F.Flat [Car]
 instance S.Store Car
 
 deriving instance Eq Iris
@@ -57,6 +59,7 @@ instance C.Serialize Iris
 instance CBOR.Serialise Iris
 instance F.Flat Iris
 instance S.Store Iris
+instance {-# OVERLAPPING #-} F.Flat [Iris]
 
 instance NFData IrisClass
 instance B.Binary IrisClass
@@ -65,8 +68,11 @@ instance CBOR.Serialise IrisClass
 instance F.Flat IrisClass
 instance S.Store IrisClass
 
-irisData = by 2000 iris
-carsData = by 200 <$> getDataset car
+-- irisData = iris
+irisData = by 100 iris
+carsData = by 20 <$> getDataset car
+-- carsData = getDataset car
+-- abaloneData = by 10 <$> getDataset abalone
 
 by n = concat . replicate n
 
@@ -76,6 +82,7 @@ t = do
    print (head iris)
    cars <- getDataset car
    print (length cars)
+   print (head cars)
    -- print $ F.flat cars
    -- The Abalone dataset is fetched
    abas <- getDataset abalone

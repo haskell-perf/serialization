@@ -1,3 +1,4 @@
+{-# LANGUAGE BangPatterns              #-}
 {-# LANGUAGE DeriveAnyClass            #-}
 {-# LANGUAGE DeriveDataTypeable        #-}
 {-# LANGUAGE DeriveGeneric             #-}
@@ -8,35 +9,35 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# LANGUAGE ScopedTypeVariables       #-}
 {-# LANGUAGE TupleSections             #-}
-{-# LANGUAGE ViewPatterns              #-}
 
 module Main where
 
 import           Control.DeepSeq
-import qualified Data.ByteString                 as BS
-import qualified Data.ByteString.Lazy            as LBS
+import qualified Data.ByteString            as BS
+import qualified Data.ByteString.Lazy       as LBS
 -- import           Data.Monoid                         ((<>))
 import           Data.Typeable
-import           Data.Word
-import           Criterion.IO
+-- import           Data.Word
+-- import           Criterion.IO
 import           Criterion.Types
-import           Data.Bifunctor
-import qualified Data.Binary                     as B
-import           Data.Binary.Serialise.CBOR      as CBOR
-import           Data.List
-import           Data.Ord
+-- import           Data.Bifunctor
+import qualified Data.Binary                as B
+import           Data.Binary.Serialise.CBOR as CBOR
+-- import           Data.List
+-- import           Data.Ord
 import           GHC.Generics
-import           Statistics.Resampling.Bootstrap
-import           System.Mem                      (performMajorGC)
-import           System.Random
-import           Text.Printf
+-- import           Statistics.Resampling.Bootstrap
+import           System.Mem                 (performMajorGC)
+-- import           System.Random
+-- import           Text.Printf
 -- import           Data.Binary.Serialise.CBOR.Decoding as CBOR
 -- import           Data.Binary.Serialise.CBOR.Encoding as CBOR
-import qualified Data.Flat                       as F
-import qualified Data.Serialize                  as C
-import qualified Data.Store                      as S
-import qualified GHC.Packing                     as P
-import Dataset
+import qualified Data.Flat                  as F
+import qualified Data.Serialize             as C
+import qualified Data.Store                 as S
+import           Dataset
+import qualified GHC.Packing                as P
+import           Report
 
 -- Testing and random data generation
 import           Test.QuickCheck
@@ -45,16 +46,41 @@ import           Test.QuickCheck
 import           Criterion.Main
 
 data BinTree a = Tree (BinTree a) (BinTree a) | Leaf a
-  deriving (Show, Eq, Typeable,Generic,B.Binary,C.Serialize,CBOR.Serialise,S.Store,F.Flat)
+  deriving (Show, Eq, Typeable,Generic)
+
+instance {-# OVERLAPPING #-} F.Flat [Direction]
+instance {-# OVERLAPPABLE #-} F.Flat a => F.Flat (BinTree a)
+instance {-# OVERLAPPING #-} F.Flat (BinTree Direction)
+instance {-# OVERLAPPING #-} F.Flat (BinTree Int)
+
+instance {-# OVERLAPPING #-} S.Store [Direction]
+instance {-# OVERLAPPABLE #-} S.Store a => S.Store (BinTree a)
+instance {-# OVERLAPPING #-} S.Store (BinTree Direction)
+instance {-# OVERLAPPING #-} S.Store (BinTree Int)
+
+instance {-# OVERLAPPING #-} B.Binary [Direction]
+instance {-# OVERLAPPABLE #-} B.Binary a => B.Binary (BinTree a)
+instance {-# OVERLAPPING #-} B.Binary (BinTree Direction)
+instance {-# OVERLAPPING #-} B.Binary (BinTree Int)
+
+instance {-# OVERLAPPING #-} C.Serialize [Direction]
+instance {-# OVERLAPPABLE #-} C.Serialize a => C.Serialize (BinTree a)
+instance {-# OVERLAPPING #-} C.Serialize (BinTree Direction)
+instance {-# OVERLAPPING #-} C.Serialize (BinTree Int)
+
+instance {-# OVERLAPPING #-} CBOR.Serialise [Direction]
+instance {-# OVERLAPPABLE #-} CBOR.Serialise a => CBOR.Serialise (BinTree a)
+instance {-# OVERLAPPING #-} CBOR.Serialise (BinTree Direction)
+instance {-# OVERLAPPING #-} CBOR.Serialise (BinTree Int)
 
 instance NFData a => NFData (BinTree a) where
-    rnf (Leaf a) = rnf a `seq` ()
+    rnf (Leaf a)          = rnf a `seq` ()
     rnf (Tree left right) = rnf left `seq` rnf right `seq` ()
 
 instance Arbitrary a => Arbitrary (BinTree a) where
     arbitrary = oneof [Leaf <$> arbitrary, Tree <$> arbitrary <*> arbitrary]
 
-    shrink Leaf{} = []
+    shrink Leaf{}            = []
     shrink (Tree left right) = [left, right] ++ shrink left ++ shrink right
 
 data Direction = North | South | Center | East | West
@@ -164,7 +190,7 @@ pkgs = [("store",serialize PkgStore,deserialize PkgStore)
        ,("binary",serialize PkgBinary,deserialize PkgBinary)
        ,("cereal",serialize PkgCereal,deserialize PkgCereal)
        ,("packman",serialize PkgPackman,deserialize PkgPackman)
-       ,("binary-serialise-cbor",serialize PkgCBOR,deserialize PkgCBOR)
+       ,("binary_serialise_cbor",serialize PkgCBOR,deserialize PkgCBOR)
        ]
 
 prop :: Serialize lib (BinTree Int) => lib -> Property
@@ -183,69 +209,58 @@ generateBalancedTree = generateBalancedTree_ (generate $ arbitrary)
 generateBalancedTree_ r 0 = Leaf <$> r
 generateBalancedTree_ r n = Tree <$> generateBalancedTree_ r (n-1) <*> generateBalancedTree_ r (n-1)
 
+workDir = ""
+
 runBench :: IO ()
 runBench = do
- 
+
   -- Data structures to (de)serialise
-  intTree <- ("BinTree Int",) . force <$> (generateBalancedTree 21 :: IO (BinTree Int))
-  directionTree <- ("BinTree Direction",) . force <$> (generateBalancedTree 21 :: IO (BinTree Direction))
-  carsDataset <- ("Cars dataset",) . force <$> carsData
-  let irisDataset = force ("Iris dataset",irisData)
-  -- let wordList = ("[Word8]",force [1..1000::Word8])
-  directionList <- ("[Direction]",) . force <$> mapM (\n -> generate $ arbitrary :: IO Direction) [1..1000000]
+  !intTree <- force . ("BinTree Int",) <$> (generateBalancedTree 21 :: IO (BinTree Int))
+  !directionTree <- force . ("BinTree Direction",) <$> (generateBalancedTree 21 :: IO (BinTree Direction))
+  !directionList <- force . ("[Direction]",) <$> mapM (\_ -> generate $ arbitrary :: IO Direction) [1..100000::Int]
+  !carsDataset <- force . ("Cars dataset",) <$> carsData
+  -- !abaloneDataset <- force . ("Abalone dataset",) <$> abaloneData
+  let !irisDataset = force ("Iris dataset",irisData)
 
   performMajorGC
 
-  let jsonReport = "report.json"
+  let jsonReport = reportsFile workDir
   let htmlReport = "report.html"
+
   defaultMainWith (defaultConfig {jsonFile=Just jsonReport,reportFile=Just htmlReport})
-    $ benchs directionList ++ benchs carsDataset ++ benchs intTree ++ benchs directionTree ++ benchs irisDataset  -- ++ benchs wordList
+    $ benchs directionList ++ benchs carsDataset ++ benchs intTree ++ benchs directionTree ++ benchs irisDataset
 
   putStrLn "Summary:\n"
-  Right (_,_,reportsSummary -> reports) <- readJSONReports jsonReport
-  mapM_ (\(tst,ms) -> report tst "Time" "mSecs" ms) $ allTests reports
+  ms <- updateMeasures workDir
 
   sizes directionList
   sizes directionTree
   sizes intTree
   sizes carsDataset
   sizes irisDataset
-  -- sizes wordList
 
-sizes (name,obj) = mapM (\(n,s,d) -> (\ss -> (n,fromIntegral . BS.length $ ss)) <$> s obj) pkgs >>= report ("serialisation-"++name) "Size" "bytes"
+  -- printMeasuresDiff ms
+  printMeasuresAll ms
 
-benchs (name,obj) = [
-  env (return obj) $ \sobj -> bgroup ("serialization-"++name) $ map (\(pkg,s,d) -> bench pkg (nfIO (s sobj))) pkgs
+-- sizes
+--   :: (Typeable t, NFData t, B.Binary t, F.Flat t, Serialise t,
+--       C.Serialize t, S.Store t) =>
+--      (String, t) -> IO ()
+sizes (name,obj) = do
+  ss <- mapM (\(n,s,_) -> (\ss -> (n,fromIntegral . BS.length $ ss)) <$> s obj) pkgs
+  -- report ("serialisation (Size)/"++name) "Size" "bytes" ss
+  addMeasures workDir ("serialisation (size)/"++name) ss
 
-  -- NOTE: the benchmark time includes the comparison of the deserialised obj with the original
-  ,bgroup ("deserialization-"++name) $ map (\(pkg,s,d) -> env (s obj) $ (\bs -> bench pkg $ whnfIO ((obj ==) <$> d bs))) pkgs
+benchs  :: (Eq a, Typeable a, NFData a, B.Binary a, F.Flat a, Serialise a,
+      C.Serialize a, S.Store a) =>
+     (String, a) -> [Benchmark]
+benchs (name,obj) =
+  let nm pkg = concat [name,"-",pkg] in [
+    env (return obj) $ \sobj -> bgroup ("serialization (time)") $ map (\(pkg,s,_) -> bench (nm pkg) (nfIO (s sobj))) pkgs
+
+    -- NOTE: the benchmark time includes the comparison of the deserialised obj with the original
+    ,bgroup ("deserialization (time)") $ map (\(pkg,s,d) -> env (s obj) $ (\bs -> bench (nm pkg) $ whnfIO ((obj ==) <$> d bs))) pkgs
   ]
-
-allTests = sort . map (\g -> (fst . head $ g,map snd g)) . groupBy (\a b -> fst a == fst b)
-
-reportsSummary = map reportSummary
-
-reportSummary r =
-  let (k,p) = break (== '/') $ reportName r
-  in  (k,(tail p,(1000 *) . estPoint . anMean . reportAnalysis $ r))
-
---data Measure = Measure {mSource::String,mValue::Double} deriving (Show,Eq)
-
-report :: String -> String -> String -> [(String,Double)] -> IO ()
-report _ _ _ [] = return ()
-report name prop unit rs = do
-  let (best,rss) = report_ rs
-  let width = maximum . map (length . fst) $ rs
-  putStrLn $ unwords [name,"ordered by",prop,"("++fst best++":",printInt (snd best),unit++")"]
-  mapM_ (\(n,v) -> putStrLn $ unwords [printString width n,printDouble v]) rss
-  putStrLn ""
-
-report_ rs =
-  let
-    rss = sortBy (comparing snd) rs
-    best = snd . head $ rss
-  in (head rss, map (second (\v -> v / best)) rss)
-
 
 main :: IO ()
 main = do
@@ -258,13 +273,5 @@ main = do
 
 fromRight :: Either a b -> b
 fromRight (Right v) = v
-fromRight (Left _) = error "Unexpected Left"
+fromRight (Left _)  = error "Unexpected Left"
 
-printDouble :: Double -> String
-printDouble = printf "%5.1f"
-
-printInt :: Double -> String
-printInt = printf "%.0f"
-
-printString :: Int -> String -> String
-printString width = printf ("%-"++show width++"s")

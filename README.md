@@ -8,7 +8,7 @@ A benchmark that compares the serialization and deserialization performances of 
 | [cereal](http://hackage.haskell.org/package/cereal)                          | Strict      | Haskell                    |
 | [binary](http://hackage.haskell.org/package/binary)                          | Lazy        | Haskell                    |
 | [binary-serialise-cbor](https://github.com/well-typed/binary-serialise-cbor) | Lazy        | Multi-Language             |
-| [flat](https://github.com/tittoassini/flat)                                  | Lazy        | Multi-Language             |
+| [flat](https://github.com/tittoassini/flat)                                  | Strict Encoder - Lazy Decoder | Multi-Language             |
 
 Compatibility Levels (lowest to highest):
 * Haskell-Same-Architecture
@@ -17,10 +17,6 @@ Compatibility Levels (lowest to highest):
   - Compatible across Haskell systems
 * Multi-Language
   - Compatible across different programming languages
-
-## Disclaimer
-
-I am the author of [flat](https://github.com/tittoassini/flat). 
 
 ## Run the Tests
 
