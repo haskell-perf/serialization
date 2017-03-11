@@ -22,133 +22,136 @@ Compatibility Levels (lowest to highest):
 
 `git clone https://github.com/tittoassini/serialization-bench;cd serialization-bench;stack build --exec serialization-bench`
 
+If you get this error:
+`serialization-bench: <stdout>: commitBuffer: invalid argument (invalid character)`
+
+Try:
+`export LC_ALL=C.UTF-8`
+
 ## Full Results
 
 [Full Criterion Report](http://htmlpreview.github.io/?https://github.com/tittoassini/serialization-bench/blob/master/report.html).
 
 ## Summary Results
 
-
 ```
-deserialization-BinTree Direction ordered by Time (cereal: 512 mSecs)
+deserialization (time)/BinTree Direction (best first)
+store                   1.0
 cereal                  1.0
-store                   1.3
-flat                    3.1
-binary                  4.5
-binary-serialise-cbor   5.3
-packman                 6.8
+flat                    1.7
+binary                  4.8
+binary_serialise_cbor   5.1
+packman                 7.1
 
-deserialization-BinTree Int ordered by Time (store: 426 mSecs)
+deserialization (time)/BinTree Int (best first)
 store                   1.0
 cereal                  1.2
+flat                    1.8
+binary_serialise_cbor   3.1
 binary                  3.2
-binary-serialise-cbor   3.5
-flat                    4.5
-packman                 9.0
+packman                 8.4
 
-deserialization-Cars dataset ordered by Time (cereal: 233 mSecs)
-cereal                  1.0
-packman                 1.5
-store                   1.7
-flat                    2.5
-binary-serialise-cbor   4.1
-binary                  4.4
-
-deserialization-Iris dataset ordered by Time (store: 200 mSecs)
+deserialization (time)/Cars dataset (best first)
 store                   1.0
-binary-serialise-cbor   1.6
-packman                 1.7
-cereal                  2.2
-binary                  7.4
-flat                   19.1
+cereal                  1.1
+packman                 2.1
+flat                    3.3
+binary_serialise_cbor   4.2
+binary                  4.8
 
-deserialization-[Direction] ordered by Time (cereal: 173 mSecs)
-cereal                  1.0
-store                   1.4
-flat                    1.7
-binary                  2.2
-binary-serialise-cbor   2.7
-packman                 6.0
-
-serialization-BinTree Direction ordered by Time (store: 111 mSecs)
+deserialization (time)/Iris dataset (best first)
 store                   1.0
-flat                    5.9
-binary                  7.3
-cereal                  9.7
-binary-serialise-cbor  18.9
-packman                25.9
+flat                    1.9
+binary_serialise_cbor   2.2
+packman                 2.3
+cereal                  2.9
+binary                 10.5
 
-serialization-BinTree Int ordered by Time (store: 93 mSecs)
+deserialization (time)/[Direction] (best first)
 store                   1.0
-flat                    7.8
-binary-serialise-cbor   8.1
-binary                 12.6
-cereal                 16.5
-packman                35.2
+cereal                  1.1
+flat                    2.0
+binary_serialise_cbor   4.9
+binary                  5.5
+packman                 6.8
 
-serialization-Cars dataset ordered by Time (store: 28 mSecs)
-store                   1.0
-binary-serialise-cbor   4.6
-flat                    6.8
-binary                  7.3
-cereal                  7.3
-packman                11.7
-
-serialization-Iris dataset ordered by Time (store: 7 mSecs)
-store                   1.0
-binary-serialise-cbor  11.8
-cereal                 17.0
-packman                28.9
-binary                 86.8
-flat                  113.3
-
-serialization-[Direction] ordered by Time (store: 21 mSecs)
-store                   1.0
-cereal                  3.4
-binary                  3.6
-flat                    4.3
-binary-serialise-cbor   4.8
-packman                41.9
-
-serialisation-[Direction] ordered by Size (flat: 425103 bytes)
+serialisation (size)/BinTree Direction (best first)
 flat                    1.0
-store                   2.4
-binary                  2.4
-cereal                  2.4
-binary-serialise-cbor   4.7
-packman                75.3
-
-serialisation-BinTree Direction ordered by Size (flat: 1153547 bytes)
-flat                    1.0
-store                   5.5
 binary                  5.5
 cereal                  5.5
-binary-serialise-cbor  10.9
+store                   5.5
+binary_serialise_cbor  10.9
 packman                87.3
 
-serialisation-BinTree Int ordered by Size (flat: 2621440 bytes)
+serialisation (size)/BinTree Int (best first)
 flat                    1.0
-binary-serialise-cbor   4.2
-store                   8.0
+binary_serialise_cbor   4.2
 binary                  8.0
 cereal                  8.0
+store                   8.0
 packman                41.3
 
-serialisation-Cars dataset ordered by Size (flat: 1148401 bytes)
+serialisation (size)/Cars dataset (best first)
 flat                    1.0
-binary-serialise-cbor   5.3
-store                   6.1
+binary_serialise_cbor   5.3
 binary                  6.1
 cereal                  6.1
-packman                 9.8
+store                   6.1
+packman                11.3
 
-serialisation-Iris dataset ordered by Size (packman: 9616872 bytes)
-packman                 1.0
-store                   1.0
+serialisation (size)/Iris dataset (best first)
+flat                    1.0
 cereal                  1.0
-flat                    1.1
-binary-serialise-cbor   1.2
-binary                  3.2
+store                   1.0
+packman                 1.0
+binary_serialise_cbor   1.2
+binary                  3.1
 
+serialisation (size)/[Direction] (best first)
+flat                    1.0
+binary                  4.7
+cereal                  4.7
+store                   4.7
+binary_serialise_cbor   9.4
+packman                75.3
 
+serialization (time)/BinTree Direction (best first)
+flat                    1.0
+store                   3.3
+cereal                  7.6
+binary                  8.6
+binary_serialise_cbor  14.2
+packman                20.1
+
+serialization (time)/BinTree Int (best first)
+flat                    1.0
+store                   4.5
+binary                 11.0
+cereal                 14.8
+binary_serialise_cbor  16.8
+packman                32.1
+
+serialization (time)/Cars dataset (best first)
+store                   1.0
+flat                    2.1
+binary_serialise_cbor   5.1
+cereal                  7.0
+binary                  7.6
+packman                10.1
+
+serialization (time)/Iris dataset (best first)
+store                   1.0
+flat                    7.7
+binary_serialise_cbor  12.6
+cereal                 20.3
+packman                29.1
+binary                 94.8
+
+serialization (time)/[Direction] (best first)
+flat                    1.0
+store                   1.5
+binary_serialise_cbor   1.6
+cereal                  2.4
+binary                  3.0
+packman                17.6
 ```

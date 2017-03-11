@@ -228,15 +228,15 @@ runBench = do
   let htmlReport = "report.html"
 
   defaultMainWith (defaultConfig {jsonFile=Just jsonReport,reportFile=Just htmlReport})
-    $ [] -- benchs directionList -- ++ benchs carsDataset -- ++ benchs intTree ++ benchs directionTree ++ benchs irisDataset
+    $ benchs directionList -- ++ benchs carsDataset -- ++ benchs intTree ++ benchs directionTree ++ benchs irisDataset
 
-  ms <- updateMeasures workDir
+  updateMeasures workDir
 
-  -- sizes directionList
-  -- sizes directionTree
-  -- sizes intTree
-  -- sizes carsDataset
-  -- sizes irisDataset
+  sizes directionList
+  sizes directionTree
+  sizes intTree
+  sizes carsDataset
+  sizes irisDataset
 
   putStrLn "Summary:\n"
   -- printMeasuresDiff ms
