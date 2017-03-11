@@ -53,10 +53,8 @@ addMeasures
   :: FilePath
      -> String
      -> [(String, Double)]
-     -> IO () -- (Measures, Measures, Measures)
-addMeasures dir name ms = do
-  _ <- addMeasures_ dir (M.fromList $ map (\(pkg,val) -> let n = concat [name,"-",pkg] in (n,Measure n val)) ms)
-  return ()
+     -> IO (Measures, Measures, Measures)
+addMeasures dir name ms = addMeasures_ dir (M.fromList $ map (\(pkg,val) -> let n = concat [name,"-",pkg] in (n,Measure n val)) ms)
 
 readMeasures :: FilePath -> IO Measures
 readMeasures dir =  do
@@ -75,17 +73,19 @@ readCriterionMeasures dir = toMeasures <$> readReports (reportsFile dir)
 measuresFile dir = dir </> "measures"
 reportsFile dir = dir </> "report.json"
 
-printMeasuresAll :: (Measures,Measures,Measures) -> IO ()
-printMeasuresAll = printMeasuresAll_ (const True)
+printMeasures dir = readMeasures dir >>= printMeasures_
+
+-- printMeasures_ :: (Measures,Measures,Measures) -> IO ()
+printMeasures_ = printMeasuresAll_ (const True)
 
 printMeasuresCurrent :: (Measures,Measures,Measures) -> IO ()
-printMeasuresCurrent ms@(_,m',_) =
+printMeasuresCurrent ms@(_,m',m'') =
   let currentKinds = allKinds m'
-  in printMeasuresAll_ (\ts -> fst ts `elem` currentKinds) ms
+  in printMeasuresAll_ (\ts -> fst ts `elem` currentKinds) m''
 
-printMeasuresAll_ f (_,m',m'') =
-  let currentKinds = allKinds m'
-  in mapM_ (\(tst,ms) -> report tst "Time" "mSecs" ms) . filter f . allTests . byTestKind $ m''
+--printMeasuresAll_ f (_,m',m'') =
+printMeasuresAll_ f m'' =
+  mapM_ (\(tst,ms) -> report tst "Time" "mSecs" ms) . filter f . allTests . byTestKind $ m''
 
 allKinds = nub . map mKind . M.elems
 

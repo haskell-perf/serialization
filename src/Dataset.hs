@@ -69,7 +69,7 @@ instance F.Flat IrisClass
 instance S.Store IrisClass
 
 -- irisData = iris
-irisData = by 100 iris
+irisData = by 500 iris
 carsData = by 20 <$> getDataset car
 -- carsData = getDataset car
 -- abaloneData = by 10 <$> getDataset abalone

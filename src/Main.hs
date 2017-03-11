@@ -228,19 +228,19 @@ runBench = do
   let htmlReport = "report.html"
 
   defaultMainWith (defaultConfig {jsonFile=Just jsonReport,reportFile=Just htmlReport})
-    $ benchs directionList ++ benchs carsDataset ++ benchs intTree ++ benchs directionTree ++ benchs irisDataset
+    $ [] -- benchs directionList -- ++ benchs carsDataset -- ++ benchs intTree ++ benchs directionTree ++ benchs irisDataset
 
-  putStrLn "Summary:\n"
   ms <- updateMeasures workDir
 
-  sizes directionList
-  sizes directionTree
-  sizes intTree
-  sizes carsDataset
-  sizes irisDataset
+  -- sizes directionList
+  -- sizes directionTree
+  -- sizes intTree
+  -- sizes carsDataset
+  -- sizes irisDataset
 
+  putStrLn "Summary:\n"
   -- printMeasuresDiff ms
-  printMeasuresAll ms
+  printMeasures workDir
 
 -- sizes
 --   :: (Typeable t, NFData t, B.Binary t, F.Flat t, Serialise t,
@@ -249,17 +249,17 @@ runBench = do
 sizes (name,obj) = do
   ss <- mapM (\(n,s,_) -> (\ss -> (n,fromIntegral . BS.length $ ss)) <$> s obj) pkgs
   -- report ("serialisation (Size)/"++name) "Size" "bytes" ss
-  addMeasures workDir ("serialisation (size)/"++name) ss
+  addMeasures workDir ("serialisation (bytes)/"++name) ss
 
 benchs  :: (Eq a, Typeable a, NFData a, B.Binary a, F.Flat a, Serialise a,
       C.Serialize a, S.Store a) =>
      (String, a) -> [Benchmark]
 benchs (name,obj) =
   let nm pkg = concat [name,"-",pkg] in [
-    env (return obj) $ \sobj -> bgroup ("serialization (time)") $ map (\(pkg,s,_) -> bench (nm pkg) (nfIO (s sobj))) pkgs
+    env (return obj) $ \sobj -> bgroup ("serialization (mSecs)") $ map (\(pkg,s,_) -> bench (nm pkg) (nfIO (s sobj))) pkgs
 
     -- NOTE: the benchmark time includes the comparison of the deserialised obj with the original
-    ,bgroup ("deserialization (time)") $ map (\(pkg,s,d) -> env (s obj) $ (\bs -> bench (nm pkg) $ whnfIO ((obj ==) <$> d bs))) pkgs
+    ,bgroup ("deserialization (mSecs)") $ map (\(pkg,s,d) -> env (s obj) $ (\bs -> bench (nm pkg) $ whnfIO ((obj ==) <$> d bs))) pkgs
   ]
 
 main :: IO ()
