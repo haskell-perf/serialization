@@ -1,14 +1,14 @@
 A benchmark that compares the serialization and deserialization performances of the latest versions of the following Haskell serialization libraries:
 
 
-| Package                                                                      | Laziness    | Compatibility              |
-| ---                                                                          | ---         | ---                        |
-| [store](https://hackage.haskell.org/package/store)                           | Strict      | Haskell-Same-Architecture  |
-| [packman](http://hackage.haskell.org/package/packman)                        | Lazy        | Haskell-Same-Architecture  |
-| [cereal](http://hackage.haskell.org/package/cereal)                          | Strict      | Haskell                    |
-| [binary](http://hackage.haskell.org/package/binary)                          | Lazy        | Haskell                    |
-| [binary-serialise-cbor](https://github.com/well-typed/binary-serialise-cbor) | Lazy        | Multi-Language             |
-| [flat](https://github.com/tittoassini/flat)                                  | Strict Encoder - Lazy Decoder | Multi-Language             |
+| Package                                                                      | Laziness                      | Compatibility             |
+| ---                                                                          | ---                           | ---                       |
+| [store](https://hackage.haskell.org/package/store)                           | Strict                        | Haskell-Same-Architecture |
+| [packman](http://hackage.haskell.org/package/packman)                        | Lazy                          | Haskell-Same-Architecture |
+| [cereal](http://hackage.haskell.org/package/cereal)                          | Strict                        | Haskell                   |
+| [binary](http://hackage.haskell.org/package/binary)                          | Lazy                          | Haskell                   |
+| [binary-serialise-cbor](https://github.com/well-typed/binary-serialise-cbor) | Lazy                          | Multi-Language            |
+| [flat](https://github.com/tittoassini/flat)                                  | Strict Encoder - Lazy Decoder | Multi-Language            |
 
 Compatibility Levels (lowest to highest):
 * Haskell-Same-Architecture
@@ -40,8 +40,9 @@ Try:
 | BinTree Int       | Binary Tree of Ints                                                  |
 | [Direction]       | A List of a simple enumeration data type                             |
 | Cars              | A dataset of Cars descriptions (mostly lists, enumerations and Ints) |
-| Iris              | A data set of Iris descriptions (lists and floats)                   |
-|                   |                                                                      |
+| Iris              | A dataset of Iris descriptions (mostly lists and floats)             |
+
+Shout if you would like other tests to be added!
 
 ## Full Results
 
