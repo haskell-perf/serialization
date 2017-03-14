@@ -77,7 +77,7 @@ printMeasures dir = readMeasures dir >>= printMeasures_
 
 -- printMeasures_ :: (Measures,Measures,Measures) -> IO ()
 printMeasures_ = printMeasuresAll_ (const True)
-
+  
 printMeasuresCurrent :: (Measures,Measures,Measures) -> IO ()
 printMeasuresCurrent ms@(_,m',m'') =
   let currentKinds = allKinds m'
