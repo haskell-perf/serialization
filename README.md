@@ -1,14 +1,14 @@
 A benchmark that compares the serialization and deserialization performances of the latest versions of the following Haskell serialization libraries:
 
 
-| Package                                                                      | Laziness                      | Compatibility             |
-| ---                                                                          | ---                           | ---                       |
-| [store](https://hackage.haskell.org/package/store)                           | Strict                        | Haskell-Same-Architecture |
-| [packman](http://hackage.haskell.org/package/packman)                        | Lazy                          | Haskell-Same-Architecture |
-| [cereal](http://hackage.haskell.org/package/cereal)                          | Strict                        | Haskell                   |
-| [binary](http://hackage.haskell.org/package/binary)                          | Lazy                          | Haskell                   |
-| [binary-serialise-cbor](https://github.com/well-typed/binary-serialise-cbor) | Lazy                          | Multi-Language            |
-| [flat](https://github.com/tittoassini/flat)                                  | Strict Encoder - Lazy Decoder | Multi-Language            |
+| Package                                                                              | Laziness                      | Compatibility             |
+| ---                                                                                  | ---                           | ---                       |
+| [store-0.4.1](https://hackage.haskell.org/package/store)                             | Strict                        | Haskell-Same-Architecture |
+| [packman-0.3.0](http://hackage.haskell.org/package/packman)                          | Lazy                          | Haskell-Same-Architecture |
+| [cereal-0.5.4.0](http://hackage.haskell.org/package/cereal)                          | Strict                        | Haskell                   |
+| [binary-0.8.4.1](http://hackage.haskell.org/package/binary)                          | Lazy                          | Haskell                   |
+| [binary-serialise-cbor-0.1.1.0](https://github.com/well-typed/binary-serialise-cbor) | Lazy                          | Multi-Language            |
+| [flat-0.1.3](https://github.com/tittoassini/flat)                                    | Strict Encoder - Lazy Decoder | Multi-Language            |
 
 Compatibility Levels (lowest to highest):
 * Haskell-Same-Architecture
