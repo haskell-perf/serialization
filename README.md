@@ -26,7 +26,7 @@ To run the tests:
 
 If you get this error:
 
-`serialization-bench: <stdout>: commitBuffer: invalid argument (invalid character)`
+`...<stdout>: commitBuffer: invalid argument (invalid character)`
 
 Try:
 
