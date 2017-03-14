@@ -18,17 +18,21 @@ Compatibility Levels (lowest to highest):
 * Multi-Language
   - Compatible across different programming languages
 
-## Run the Tests
+## Tests
+
+To run the tests:
 
 `stack bench`
 
 If you get this error:
+
 `serialization-bench: <stdout>: commitBuffer: invalid argument (invalid character)`
 
 Try:
+
 `export LC_ALL=C.UTF-8`
 
-# Test Data
+## Test Data
 
 | Test              | Description                                                          |
 | ---               | ---                                                                  |
