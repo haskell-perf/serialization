@@ -48,6 +48,7 @@ import           Criterion.Main
 data BinTree a = Tree (BinTree a) (BinTree a) | Leaf a
   deriving (Show, Eq, Typeable,Generic)
 
+-- Specialised instances, simple and cheerful way to increase performance
 instance {-# OVERLAPPING #-} F.Flat [Direction]
 instance {-# OVERLAPPABLE #-} F.Flat a => F.Flat (BinTree a)
 instance {-# OVERLAPPING #-} F.Flat (BinTree Direction)
@@ -83,6 +84,7 @@ instance Arbitrary a => Arbitrary (BinTree a) where
     shrink Leaf{}            = []
     shrink (Tree left right) = [left, right] ++ shrink left ++ shrink right
 
+-- A simple enumeration
 data Direction = North | South | Center | East | West
                deriving (Eq, Ord, Read, Show, Typeable, Generic, NFData,B.Binary,C.Serialize,CBOR.Serialise,S.Store,F.Flat)
 
@@ -205,10 +207,13 @@ prop lib = forAll arbitrary (ioProperty . test)
 runQC :: Serialize lib (BinTree Int) => lib -> IO ()
 runQC = quickCheckWith stdArgs{maxSuccess=1000} . prop
 
+generateBalancedTree :: (Arbitrary a1) => Int -> IO (BinTree a1)
 generateBalancedTree = generateBalancedTree_ (generate $ arbitrary)
-generateBalancedTree_ r 0 = Leaf <$> r
-generateBalancedTree_ r n = Tree <$> generateBalancedTree_ r (n-1) <*> generateBalancedTree_ r (n-1)
+  where
+    generateBalancedTree_ r 0 = Leaf <$> r
+    generateBalancedTree_ r n = Tree <$> generateBalancedTree_ r (n-1) <*> generateBalancedTree_ r (n-1)
 
+workDir :: [Char]
 workDir = ""
 
 runBench :: IO ()
@@ -228,7 +233,7 @@ runBench = do
   let htmlReport = "report.html"
 
   defaultMainWith (defaultConfig {jsonFile=Just jsonReport,reportFile=Just htmlReport})
-    $ benchs directionList -- ++ benchs carsDataset -- ++ benchs intTree ++ benchs directionTree ++ benchs irisDataset
+    $ benchs directionList ++ benchs intTree ++ benchs directionTree ++ benchs carsDataset ++ benchs irisDataset
 
   updateMeasures workDir
 
@@ -242,24 +247,20 @@ runBench = do
   -- printMeasuresDiff ms
   printMeasures workDir
 
--- sizes
---   :: (Typeable t, NFData t, B.Binary t, F.Flat t, Serialise t,
---       C.Serialize t, S.Store t) =>
---      (String, t) -> IO ()
+sizes :: (Typeable t, NFData t, B.Binary t, F.Flat t, Serialise t,C.Serialize t, S.Store t) => (String, t) -> IO ()
 sizes (name,obj) = do
   ss <- mapM (\(n,s,_) -> (\ss -> (n,fromIntegral . BS.length $ ss)) <$> s obj) pkgs
   -- report ("serialisation (Size)/"++name) "Size" "bytes" ss
   addMeasures workDir ("serialisation (bytes)/"++name) ss
 
-benchs  :: (Eq a, Typeable a, NFData a, B.Binary a, F.Flat a, Serialise a,
-      C.Serialize a, S.Store a) =>
-     (String, a) -> [Benchmark]
+benchs  :: (Eq a, Typeable a, NFData a, B.Binary a, F.Flat a, Serialise a,C.Serialize a, S.Store a) => (String, a) -> [Benchmark]
 benchs (name,obj) =
   let nm pkg = concat [name,"-",pkg] in [
-    env (return obj) $ \sobj -> bgroup ("serialization (mSecs)") $ map (\(pkg,s,_) -> bench (nm pkg) (nfIO (s sobj))) pkgs
+    -- env (return obj) $ \sobj -> bgroup ("serialization (mSecs)") $ map (\(pkg,s,_) -> bench (nm pkg) (nfIO (s sobj))) pkgs
+    bgroup ("serialization (time)") $ map (\(pkg,s,_) -> bench (nm pkg) (nfIO (s obj))) pkgs
 
     -- NOTE: the benchmark time includes the comparison of the deserialised obj with the original
-    ,bgroup ("deserialization (mSecs)") $ map (\(pkg,s,d) -> env (s obj) $ (\bs -> bench (nm pkg) $ whnfIO ((obj ==) <$> d bs))) pkgs
+    ,bgroup ("deserialization (time)") $ map (\(pkg,s,d) -> env (s obj) $ (\bs -> bench (nm pkg) $ whnfIO ((obj ==) <$> d bs))) pkgs
   ]
 
 main :: IO ()

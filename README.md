@@ -23,16 +23,32 @@ Compatibility Levels (lowest to highest):
 `git clone https://github.com/tittoassini/serialization-bench;cd serialization-bench;stack build --exec serialization-bench`
 
 If you get this error:
+
 `serialization-bench: <stdout>: commitBuffer: invalid argument (invalid character)`
 
 Try:
+
 `export LC_ALL=C.UTF-8`
+
+# Tests
+
+| Test              | Description                                                          |
+| ---               | ---                                                                  |
+| BinTree Direction | Binary Tree of a simple enumeration data type                        |
+| BinTree Int       | Binary Tree of Ints                                                  |
+| [Direction]       | A List of a simple enumeration data type                             |
+| Cars              | A dataset of Cars descriptions (mostly lists, enumerations and Ints) |
+| Iris              | A data set of Iris descriptions (lists and floats)                   |
+|                   |                                                                      |
+
 
 ## Full Results
 
 [Full Criterion Report](http://htmlpreview.github.io/?https://github.com/tittoassini/serialization-bench/blob/master/report.html).
 
 ## Summary Results
+
+Sorted by best package, scores relative to best result.
 
 ```
 deserialization (time)/BinTree Direction (best first)

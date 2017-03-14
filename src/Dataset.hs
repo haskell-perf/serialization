@@ -11,7 +11,7 @@ import qualified Data.Serialize             as C
 import qualified Data.Store                 as S
 -- import           GHC.Generics
 import           Numeric.Datasets           (getDataset)
-import           Numeric.Datasets.Abalone   (abalone)
+-- import           Numeric.Datasets.Abalone   (abalone)
 import           Numeric.Datasets.Car
 import           Numeric.Datasets.Iris
 
@@ -69,22 +69,27 @@ instance F.Flat IrisClass
 instance S.Store IrisClass
 
 -- irisData = iris
+irisData :: [Iris]
 irisData = by 500 iris
+
+carsData :: IO [Car]
 carsData = by 20 <$> getDataset car
 -- carsData = getDataset car
 -- abaloneData = by 10 <$> getDataset abalone
 
+by :: Int -> [a] -> [a]
 by n = concat . replicate n
 
-t = do
-   -- The Iris data set is embedded
-   print (length iris)
-   print (head iris)
-   cars <- getDataset car
-   print (length cars)
-   print (head cars)
-   -- print $ F.flat cars
-   -- The Abalone dataset is fetched
-   abas <- getDataset abalone
-   print (length abas)
-   print (head abas)
+-- test :: IO ()
+-- test = do
+--    -- The Iris data set is embedded
+--    print (length iris)
+--    print (head iris)
+--    cars <- getDataset car
+--    print (length cars)
+--    print (head cars)
+--    -- print $ F.flat cars
+--    -- The Abalone dataset is fetched
+--    abas <- getDataset abalone
+--    print (length abas)
+--    print (head abas)

@@ -12,10 +12,15 @@ build-type:          Simple
 -- extra-source-files:
 cabal-version:       >=1.10
 
-executable serialization-bench
+library
+  build-depends: base
+  default-language: Haskell2010
+
+benchmark all
+  default-language: Haskell2010
+  type: exitcode-stdio-1.0
   main-is:             Main.hs
   other-modules: Dataset,Report
-  -- other-extensions:
   build-depends:
                 QuickCheck,
                 base               >=4.8   && <4.10,
@@ -33,8 +38,8 @@ executable serialization-bench
                 packman,
                 random,
                 statistics,
-                store >= 0.3
+                store >= 0.4
   hs-source-dirs:      src
   default-language:    Haskell2010
-  ghc-options:         -Wall -O2
+  ghc-options:         -Wall -fno-warn-orphans -O2
   --ghc-options:         -Wall -O2 -ddump-simpl -dsuppress-idinfo -ddump-to-file
