@@ -1,0 +1,39 @@
+# ghc 7.10.3
+resolver: lts-6.30
+
+# ghc 8.0.1
+# PROB: packman won't compile
+# resolver: lts-7.10
+
+# Local packages, usually specified by relative directory name
+packages:
+- '.'
+
+# - ../flat
+
+- location:
+    git: https://github.com/tittoassini/flat
+    commit: 8f861d784a313e38f1cd94c0f32717e258512de8
+  extra-dep: true
+
+- location:
+    git: https://github.com/well-typed/binary-serialise-cbor
+    commit: 5e2f20c0a2d8fd750f431af9a17ba116a6f31cf0
+  extra-dep: true
+
+flags:
+  binary-serialise-cbor:
+    newtime15: true
+
+extra-deps:
+- packman-0.3.0
+- binary-0.8.4.1
+- cereal-0.5.4.0
+- store-0.4.1
+- store-core-0.4
+- th-utilities-0.2.0.1
+- datasets-0.2.1
+- criterion-1.1.4.0
+- code-page-0.1.1
+- optparse-applicative-0.13.0.0
+- mono-traversable-1.0.2

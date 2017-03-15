@@ -1,0 +1,45 @@
+name:                serialization
+version:             0.1.0.0
+-- synopsis:
+-- description:
+-- license:
+license-file:        LICENSE
+author:              Ömer Sinan Ağacan
+maintainer:          omeragacan@gmail.com
+-- copyright:
+-- category:
+build-type:          Simple
+-- extra-source-files:
+cabal-version:       >=1.10
+
+library
+  build-depends: base
+  default-language: Haskell2010
+
+benchmark all
+  default-language: Haskell2010
+  type: exitcode-stdio-1.0
+  main-is:             Main.hs
+  other-modules: Dataset,Report
+  build-depends:
+                QuickCheck,
+                base               >=4.8   && <4.10,
+                binary             >=0.8   && <0.9,
+                binary-serialise-cbor,
+                bytestring,
+                cereal             >=0.5.1 && <0.6,
+                containers >= 0.5.6.2,
+                criterion,
+                datasets,
+                deepseq,
+                directory >= 1.2.2.0,
+                filepath,
+                flat,
+                packman,
+                random,
+                statistics,
+                store >= 0.4
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+  ghc-options:         -Wall -fno-warn-orphans -O2
+  --ghc-options:         -Wall -O2 -ddump-simpl -dsuppress-idinfo -ddump-to-file
