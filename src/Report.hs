@@ -12,6 +12,7 @@ import           Text.Printf
 import System.FilePath
 import Control.DeepSeq
 import GHC.Generics
+import Control.Monad
 
 type Measures = M.Map String Measure
 
@@ -36,26 +37,29 @@ toMeasure :: Report -> Measure
 toMeasure r = Measure (reportName r) ((1000 *) . estPoint . anMean . reportAnalysis $ r)
 
 updateMeasures :: FilePath -> IO ()
-updateMeasures dir = do
+updateMeasures = void . updateMeasures_
+
+updateMeasures_ :: FilePath -> IO (Measures, Measures, Measures)
+updateMeasures_ dir = do
   m' <- readCriterionMeasures dir
   addMeasures_ dir m'
 
 addMeasures_
   :: FilePath
      -> Measures
-     -> IO () -- Measures, Measures, Measures)
+     -> IO (Measures, Measures, Measures)
 addMeasures_ dir m' = do
   !m <- readMeasures dir
   let m'' = M.union m' m
   writeMeasures dir m''
-  --return (m,m',m'')
+  return (m,m',m'')
 
 addMeasures
   :: FilePath
      -> String
      -> [(String, Double)]
      -> IO () -- Measures, Measures, Measures)
-addMeasures dir name ms = addMeasures_ dir (M.fromList $ map (\(pkg,val) -> let n = concat [name,"-",pkg] in (n,Measure n val)) ms)
+addMeasures dir name ms = void $ addMeasures_ dir (M.fromList $ map (\(pkg,val) -> let n = concat [name,"-",pkg] in (n,Measure n val)) ms)
 
 readMeasures :: FilePath -> IO Measures
 readMeasures dir =  do
@@ -131,7 +135,7 @@ report_ rs =
   let
     rss = sortBy (comparing snd) rs
     best = snd . head $ rss
-  in (head rss, map (second (\v -> v / best)) rss)
+  in (head rss, map (second (/ best)) rss)
 
 printDouble :: Double -> String
 printDouble = printf "%5.1f"
