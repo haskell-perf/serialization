@@ -34,7 +34,7 @@ benchmark all
                 deepseq,
                 directory >= 1.2.2.0,
                 filepath,
-                flat,
+                flat >=0.2,
                 packman,
                 random,
                 statistics,

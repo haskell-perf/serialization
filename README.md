@@ -8,7 +8,7 @@ Time and size benchmarks for the following Haskell serialization libraries:
 | [cereal-0.5.4.0](http://hackage.haskell.org/package/cereal)                          | Strict                        | Haskell                   |
 | [binary-0.8.5.1](http://hackage.haskell.org/package/binary)                          | Lazy                          | Haskell                   |
 | [binary-serialise-cbor-0.1.1.0](https://github.com/well-typed/binary-serialise-cbor) | Lazy                          | Multi-Language            |
-| [flat-0.1.5](https://github.com/tittoassini/flat)                                    | Strict  | Multi-Language            |
+| [flat-0.2.2](https://github.com/tittoassini/flat)                                    | Strict  | Multi-Language            |
 
 Compatibility Levels (lowest to highest):
 * Haskell-Same-Architecture

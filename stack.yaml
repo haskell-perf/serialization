@@ -12,11 +12,6 @@ packages:
 # - ../flat
 
 - location:
-    git: https://github.com/tittoassini/flat
-    commit: a0fbd3763756ea5fad7f6d8c8e0354488c22811e
-  extra-dep: true
-
-- location:
     git: https://github.com/well-typed/binary-serialise-cbor
     commit: bfbbc3cc741ffa8a6ad3a23ae77f004e8c0e3620
   extra-dep: true
@@ -29,6 +24,7 @@ extra-deps:
 - packman-0.3.0
 - binary-0.8.5.1
 - cereal-0.5.4.0
+- flat-0.2.2
 - store-0.4.2
 - store-core-0.4
 - th-utilities-0.2.0.1
