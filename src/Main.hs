@@ -235,6 +235,7 @@ runBench = do
   defaultMainWith (defaultConfig {jsonFile=Just jsonReport,reportFile=Just htmlReport})
     $ benchs directionList ++ benchs intTree ++ benchs directionTree ++ benchs carsDataset ++ benchs irisDataset
 
+  deleteMeasures workDir
   updateMeasures workDir
 
   sizes directionList
@@ -250,7 +251,7 @@ runBench = do
 sizes :: (Typeable t, NFData t, B.Binary t, F.Flat t, Serialise t,C.Serialize t, S.Store t) => (String, t) -> IO ()
 sizes (name,obj) = do
   ss <- mapM (\(n,s,_) -> (\ss -> (n,fromIntegral . BS.length $ ss)) <$> s obj) pkgs
-  -- report ("serialisation (Size)/"++name) "Size" "bytes" ss
+  print ss
   addMeasures workDir ("serialisation (bytes)/"++name) ss
 
 benchs  :: (Eq a, Typeable a, NFData a, B.Binary a, F.Flat a, Serialise a,C.Serialize a, S.Store a) => (String, a) -> [Benchmark]
