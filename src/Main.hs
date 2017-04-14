@@ -252,7 +252,7 @@ sizes :: (Typeable t, NFData t, B.Binary t, F.Flat t, Serialise t,C.Serialize t,
 sizes (name,obj) = do
   ss <- mapM (\(n,s,_) -> (\ss -> (n,fromIntegral . BS.length $ ss)) <$> s obj) pkgs
   print ss
-  addMeasures workDir ("serialisation (bytes)/"++name) ss
+  addMeasures workDir ("size (bytes)/"++name) ss
 
 benchs  :: (Eq a, Typeable a, NFData a, B.Binary a, F.Flat a, Serialise a,C.Serialize a, S.Store a) => (String, a) -> [Benchmark]
 benchs (name,obj) =
