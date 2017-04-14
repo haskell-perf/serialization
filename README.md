@@ -46,7 +46,7 @@ Shout if you would like other tests to be added!
 
 ## Full Results
 
-[Full Criterion Report](https://rawgit.com/tittoassini/serialization-bench/master/report.html), also in [json format](https://raw.githubusercontent.com/tittoassini/serialization-bench/master/report.json).
+[Full Criterion Report](https://rawgit.com/haskell-perf/serialization/master/report.html), also in [json format](https://raw.githubusercontent.com/haskell-perf/serialization/master/report.json).
 
 ## Summary Results
 
