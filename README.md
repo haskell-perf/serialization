@@ -1,14 +1,14 @@
 Time and size benchmarks for the following Haskell serialization libraries:
 
 
-| Package                                                                    | Laziness | Compatibility             |
-| ---                                                                        | ---      | ---                       |
-| [store-0.4.3.1](https://hackage.haskell.org/package/store)                 | Strict   | Haskell-Same-Architecture |
-| [packman-0.3.0](http://hackage.haskell.org/package/packman)                | Lazy     | Haskell-Same-Architecture |
-| [cereal-0.5.4.0](http://hackage.haskell.org/package/cereal)                | Strict   | Haskell                   |
-| [binary-0.8.5.1](http://hackage.haskell.org/package/binary)                | Lazy     | Haskell                   |
-| [serialise-0.1.0.0](https://hackage.haskell.org/package/serialise-0.1.0.0) | Lazy     | Multi-Language            |
-| [flat-0.3](https://github.com/tittoassini/flat)                            | Strict   | Multi-Language            |
+| Package                                                            | Laziness | Compatibility             |
+| ---                                                                | ---      | ---                       |
+| [store-0.4.3.1](https://hackage.haskell.org/package/store)         | Strict   | Haskell-Same-Architecture |
+| [packman-0.3.0](http://hackage.haskell.org/package/packman)        | Lazy     | Haskell-Same-Architecture |
+| [cereal-0.5.4.0](http://hackage.haskell.org/package/cereal)        | Strict   | Haskell                   |
+| [binary-0.8.5.1](http://hackage.haskell.org/package/binary)        | Lazy     | Haskell                   |
+| [serialise-0.1.0.0](https://hackage.haskell.org/package/serialise) | Lazy     | Multi-Language            |
+| [flat-0.3](https://github.com/tittoassini/flat)                    | Strict   | Multi-Language            |
 
 Compatibility Levels (lowest to highest):
 * Haskell-Same-Architecture
