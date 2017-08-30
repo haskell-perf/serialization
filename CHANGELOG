@@ -1,0 +1,4 @@
+0.1.1
+	Switched to the newly hackage-released 'serialise' package from the previously unreleased 'binary-serialise-cbor' package
+	Updated all packages to the latest available version
+

@@ -1,5 +1,5 @@
 # ghc 7.10.3
-resolver: lts-6.30
+resolver: lts-6.35
 
 # ghc 8.0.1
 # PROB: packman won't compile
@@ -9,24 +9,19 @@ resolver: lts-6.30
 packages:
 - '.'
 
-# - ../flat
-
-- location:
-    git: https://github.com/well-typed/binary-serialise-cbor
-    commit: bfbbc3cc741ffa8a6ad3a23ae77f004e8c0e3620
-  extra-dep: true
-
 flags:
-  binary-serialise-cbor:
-    newtime15: true
+   serialise:
+     newtime15: true
 
 extra-deps:
 - packman-0.3.0
 - binary-0.8.5.1
 - cereal-0.5.4.0
-- flat-0.2.2
-- store-0.4.2
-- store-core-0.4
+- flat-0.3
+- store-0.4.3.1
+- store-core-0.4.1
+- serialise-0.1.0.0
+- cborg-0.1.1.0
 - th-utilities-0.2.0.1
 - datasets-0.2.1
 - criterion-1.1.4.0

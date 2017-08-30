@@ -22,7 +22,8 @@ import           Data.Typeable
 import           Criterion.Types
 -- import           Data.Bifunctor
 import qualified Data.Binary                as B
-import           Data.Binary.Serialise.CBOR as CBOR
+-- import           Data.Binary.Serialise.CBOR as CBOR
+import Codec.Serialise as CBOR
 -- import           Data.List
 -- import           Data.Ord
 import           GHC.Generics
@@ -182,9 +183,9 @@ instance (S.Store a, NFData a) => Serialize PkgStore a where
 
 instance (F.Flat a, NFData a) => Serialize PkgFlat a where
     {-# NOINLINE serialize #-}
-    serialize _   = return . force . LBS.toStrict . F.flat
+    serialize _   = return . force . F.flat
     {-# NOINLINE deserialize #-}
-    deserialize _ = return . force . fromRight . F.unflat . LBS.fromStrict
+    deserialize _ = return . force . fromRight . F.unflat
 
 pkgs :: (NFData a,C.Serialize a,Typeable a,Serialise a,S.Store a,F.Flat a,B.Binary a) => [(String,a -> IO BS.ByteString,BS.ByteString -> IO a)]
 pkgs = [("store",serialize PkgStore,deserialize PkgStore)
@@ -192,7 +193,7 @@ pkgs = [("store",serialize PkgStore,deserialize PkgStore)
        ,("binary",serialize PkgBinary,deserialize PkgBinary)
        ,("cereal",serialize PkgCereal,deserialize PkgCereal)
        ,("packman",serialize PkgPackman,deserialize PkgPackman)
-       ,("binary_serialise_cbor",serialize PkgCBOR,deserialize PkgCBOR)
+       ,("serialise",serialize PkgCBOR,deserialize PkgCBOR)
        ]
 
 prop :: Serialize lib (BinTree Int) => lib -> Property
@@ -252,7 +253,7 @@ sizes :: (Typeable t, NFData t, B.Binary t, F.Flat t, Serialise t,C.Serialize t,
 sizes (name,obj) = do
   ss <- mapM (\(n,s,_) -> (\ss -> (n,fromIntegral . BS.length $ ss)) <$> s obj) pkgs
   print ss
-  addMeasures workDir ("serialisation (bytes)/"++name) ss
+  addMeasures workDir ("size (bytes)/"++name) ss
 
 benchs  :: (Eq a, Typeable a, NFData a, B.Binary a, F.Flat a, Serialise a,C.Serialize a, S.Store a) => (String, a) -> [Benchmark]
 benchs (name,obj) =

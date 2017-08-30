@@ -1,14 +1,14 @@
 Time and size benchmarks for the following Haskell serialization libraries:
 
 
-| Package                                                                              | Laziness                      | Compatibility             |
-| ---                                                                                  | ---                           | ---                       |
-| [store-0.4.2](https://hackage.haskell.org/package/store)                             | Strict                        | Haskell-Same-Architecture |
-| [packman-0.3.0](http://hackage.haskell.org/package/packman)                          | Lazy                          | Haskell-Same-Architecture |
-| [cereal-0.5.4.0](http://hackage.haskell.org/package/cereal)                          | Strict                        | Haskell                   |
-| [binary-0.8.5.1](http://hackage.haskell.org/package/binary)                          | Lazy                          | Haskell                   |
-| [binary-serialise-cbor-0.1.1.0](https://github.com/well-typed/binary-serialise-cbor) | Lazy                          | Multi-Language            |
-| [flat-0.2.2](https://github.com/tittoassini/flat)                                    | Strict  | Multi-Language            |
+| Package                                                            | Laziness | Compatibility             |
+| ---                                                                | ---      | ---                       |
+| [store-0.4.3.1](https://hackage.haskell.org/package/store)         | Strict   | Haskell-Same-Architecture |
+| [packman-0.3.0](http://hackage.haskell.org/package/packman)        | Lazy     | Haskell-Same-Architecture |
+| [cereal-0.5.4.0](http://hackage.haskell.org/package/cereal)        | Strict   | Haskell                   |
+| [binary-0.8.5.1](http://hackage.haskell.org/package/binary)        | Lazy     | Haskell                   |
+| [serialise-0.1.0.0](https://hackage.haskell.org/package/serialise) | Lazy     | Multi-Language            |
+| [flat-0.3](https://github.com/tittoassini/flat)                    | Strict   | Multi-Language            |
 
 Compatibility Levels (lowest to highest):
 * Haskell-Same-Architecture
@@ -46,128 +46,128 @@ Shout if you would like other tests to be added!
 
 ## Full Results
 
-[Full Criterion Report](https://rawgit.com/tittoassini/serialization-bench/master/report.html), also in [json format](https://raw.githubusercontent.com/tittoassini/serialization-bench/master/report.json).
+[Full Criterion Report](https://rawgit.com/haskell-perf/serialization/master/report.html), also in [json format](https://raw.githubusercontent.com/haskell-perf/serialization/master/report.json).
 
 ## Summary Results
 
 ```
 deserialization (time)/BinTree Direction (best first)
-store                   1.0
-cereal                  1.0
-flat                    1.2
-binary                  4.9
-binary_serialise_cbor   6.0
-packman                 7.1
+store       1.0
+cereal      1.0
+flat        1.2
+binary      4.8
+serialise   5.6
+packman     6.9
 
 deserialization (time)/BinTree Int (best first)
-store                   1.0
-flat                    1.2
-cereal                  1.2
-binary                  3.1
-binary_serialise_cbor   3.8
-packman                 8.4
+store       1.0
+flat        1.2
+cereal      1.2
+binary      3.2
+serialise   3.8
+packman     8.3
 
 deserialization (time)/Cars dataset (best first)
-store                   1.0
-cereal                  1.1
-flat                    1.3
-packman                 2.1
-binary                  4.8
-binary_serialise_cbor   5.3
+store       1.0
+cereal      1.1
+flat        1.3
+packman     2.1
+binary      4.9
+serialise   5.1
 
 deserialization (time)/Iris dataset (best first)
-store                   1.0
-flat                    1.6
-packman                 2.3
-binary_serialise_cbor   2.7
-cereal                  3.0
-binary                 10.7
+store       1.0
+flat        1.8
+packman     2.3
+serialise   2.6
+cereal      3.0
+binary     10.1
 
 deserialization (time)/[Direction] (best first)
-store                   1.0
-cereal                  1.1
-flat                    1.4
-binary                  5.5
-binary_serialise_cbor   5.5
-packman                 6.8
-
-serialisation (bytes)/BinTree Direction (best first)
-flat                    1.0
-binary                  5.5
-cereal                  5.5
-store                   5.5
-binary_serialise_cbor  10.9
-packman                87.3
-
-serialisation (bytes)/BinTree Int (best first)
-flat                    1.0
-binary_serialise_cbor   4.2
-binary                  8.0
-cereal                  8.0
-store                   8.0
-packman                41.3
-
-serialisation (bytes)/Cars dataset (best first)
-flat                    1.0
-binary_serialise_cbor   5.3
-binary                  6.1
-cereal                  6.1
-store                   6.1
-packman                11.3
-
-serialisation (bytes)/Iris dataset (best first)
-packman                 1.0
-flat                    1.0
-cereal                  1.0
-store                   1.0
-binary_serialise_cbor   1.2
-binary                  3.1
-
-serialisation (bytes)/[Direction] (best first)
-flat                    1.0
-binary                  4.7
-cereal                  4.7
-store                   4.7
-binary_serialise_cbor   9.4
-packman                75.3
+store       1.0
+cereal      1.1
+flat        1.4
+binary      5.4
+serialise   5.5
+packman     6.7
 
 serialization (time)/BinTree Direction (best first)
-flat                    1.0
-store                   3.2
-cereal                  7.3
-binary                  8.5
-binary_serialise_cbor  13.1
-packman                19.0
+flat        1.0
+store       3.1
+cereal      7.1
+binary      8.2
+serialise  12.7
+packman    18.1
 
 serialization (time)/BinTree Int (best first)
-flat                    1.0
-store                   4.5
-binary                 10.8
-cereal                 14.4
-binary_serialise_cbor  16.1
-packman                30.5
+flat        1.0
+store       4.4
+binary     10.9
+cereal     14.2
+serialise  15.9
+packman    30.0
 
 serialization (time)/Cars dataset (best first)
-store                   1.0
-flat                    2.1
-binary_serialise_cbor   4.5
-binary                  7.1
-cereal                  7.3
-packman                 9.2
+store       1.0
+flat        2.0
+serialise   4.2
+binary      6.7
+cereal      7.0
+packman     9.5
 
 serialization (time)/Iris dataset (best first)
-store                   1.0
-flat                   10.1
-binary_serialise_cbor  11.7
-cereal                 20.8
-packman                31.3
-binary                100.0
+store       1.0
+flat        9.1
+serialise  10.3
+cereal     16.3
+packman    27.0
+binary     90.5
 
 serialization (time)/[Direction] (best first)
-flat                    1.0
-store                   1.1
-binary_serialise_cbor   1.4
-cereal                  1.8
-binary                  2.1
-packman                12.9
+flat        1.0
+store       1.1
+cereal      1.8
+binary      2.2
+serialise   2.2
+packman    12.6
+
+size (bytes)/BinTree Direction (best first)
+flat        1.0
+binary      5.5
+cereal      5.5
+store       5.5
+serialise  10.9
+packman    87.3
+
+size (bytes)/BinTree Int (best first)
+flat        1.0
+serialise   4.2
+binary      8.0
+cereal      8.0
+store       8.0
+packman    41.3
+
+size (bytes)/Cars dataset (best first)
+flat        1.0
+serialise   5.3
+binary      6.1
+cereal      6.1
+store       6.1
+packman    11.3
+
+size (bytes)/Iris dataset (best first)
+packman     1.0
+flat        1.0
+cereal      1.0
+store       1.0
+serialise   1.2
+binary      3.1
+
+size (bytes)/[Direction] (best first)
+flat        1.0
+binary      4.7
+cereal      4.7
+store       4.7
+serialise   9.4
+packman    75.3
 ```
