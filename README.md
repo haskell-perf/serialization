@@ -1,5 +1,35 @@
-Time and size benchmarks for the following Haskell serialization libraries:
+Benchmarks for Haskell serialization libraries.
 
+For every library we measure the serialization time, deserialization time and size of the encoded output for a set of test datasets.
+
+To merge all these measures in a concrete use case, we also estimate the total transfer time at different transmission speeds, that's to say the the time that it takes to serialize, move across a network (with no compression and no protocol overheads) and deserialize a given dataset.      
+
+## Summary Results
+
+For every test and every network speed, the table lists all packages whose transfer speeds are within 30% of the best result (with best package listed first).
+
+||BinTree Direction|BinTree Int|Cars dataset|Iris dataset|[Direction]|
+| ---| ---| ---| ---| ---| ---|
+|deserialization (time)|flat0.3.2,store0.5.0|store0.5.0,cereal0.5.7.0,flat0.3.2|flat0.3.2,store0.5.0|store0.5.0,flat0.3.2|flat0.3.2,cereal0.5.7.0,store0.5.0|
+|serialization (time)|store0.5.0|store0.5.0|store0.5.0|store0.5.0|store0.5.0|
+|size (bytes)|flat0.3.2,flat-0.3.2|flat-0.3.2,flat0.3.2|flat-0.3.2,flat0.3.2|packman-0.5.0,packman0.5.0,flat-0.3.2,flat0.3.2,[store-0.5.0](https://hackage.haskell.org/package/store),cereal-0.5.7.0,cereal0.5.7.0,store-0.5.0,store0.5.0,serialise-0.2.0.0,serialise0.2.0.0|flat-0.3.2,flat0.3.2|
+|transfer [10 MBits] (time)|flat0.3.2|flat0.3.2|flat0.3.2|flat0.3.2,store0.5.0,packman0.5.0,cereal0.5.7.0,serialise0.2.0.0|flat0.3.2|
+|transfer [100 MBits] (time)|flat0.3.2,store0.5.0|flat0.3.2|flat0.3.2|store0.5.0,flat0.3.2|store0.5.0,flat0.3.2,cereal0.5.7.0|
+|transfer [1000 MBits] (time)|store0.5.0,flat0.3.2|flat0.3.2,store0.5.0|store0.5.0,flat0.3.2|store0.5.0|store0.5.0,flat0.3.2|
+
+
+## Full Results
+
+[Full Results](https://rawgit.com/haskell-perf/serialization/master/report.md)
+
+* [Raw Criterion Results](https://rawgit.com/haskell-perf/serialization/master/report.html)
+
+* [Raw Criterion Results in JSON Format], also in [json format](https://raw.githubusercontent.com/haskell-perf/serialization/master/report.json).
+
+
+## Tested Libraries
+
+Performance is not the only relevant property, depending on your needs you should also consider other features like laziness and compatibility.
 
 | Package                                                            | Laziness | Compatibility             |
 | ---                                                                | ---      | ---                       |
@@ -10,6 +40,7 @@ Time and size benchmarks for the following Haskell serialization libraries:
 | [serialise-0.1.0.0](https://hackage.haskell.org/package/serialise) | Lazy     | Multi-Language            |
 | [flat-0.3](https://github.com/tittoassini/flat)                    | Strict   | Multi-Language            |
 
+
 Compatibility Levels (lowest to highest):
 * Haskell-Same-Architecture
   - Compatible across Haskell systems sharing the same CPU and endianness
@@ -18,19 +49,7 @@ Compatibility Levels (lowest to highest):
 * Multi-Language
   - Compatible across different programming languages
 
-## Tests
-
-To run the benchmarks:
-
-`stack bench`
-
-If you get this error:
-
-`...<stdout>: commitBuffer: invalid argument (invalid character)`
-
-Try:
-
-`export LC_ALL=C.UTF-8`
+All compiled with GHC 8.4.3.
 
 ## Test Data
 
@@ -44,130 +63,25 @@ Try:
 
 Shout if you would like other tests to be added!
 
-## Full Results
+## Running the Benchmarks
 
-[Full Criterion Report](https://rawgit.com/haskell-perf/serialization/master/report.html), also in [json format](https://raw.githubusercontent.com/haskell-perf/serialization/master/report.json).
+Run the benchmarks with:
 
-## Summary Results
+`stack bench :all`
 
-```
-deserialization (time)/BinTree Direction (best first)
-store       1.0
-cereal      1.0
-flat        1.2
-binary      4.8
-serialise   5.6
-packman     6.9
+If you get this error:
 
-deserialization (time)/BinTree Int (best first)
-store       1.0
-flat        1.2
-cereal      1.2
-binary      3.2
-serialise   3.8
-packman     8.3
+`...<stdout>: commitBuffer: invalid argument (invalid character)`
 
-deserialization (time)/Cars dataset (best first)
-store       1.0
-cereal      1.1
-flat        1.3
-packman     2.1
-binary      4.9
-serialise   5.1
+Try:
 
-deserialization (time)/Iris dataset (best first)
-store       1.0
-flat        1.8
-packman     2.3
-serialise   2.6
-cereal      3.0
-binary     10.1
+`export LC_ALL=C.UTF-8`
 
-deserialization (time)/[Direction] (best first)
-store       1.0
-cereal      1.1
-flat        1.4
-binary      5.4
-serialise   5.5
-packman     6.7
 
-serialization (time)/BinTree Direction (best first)
-flat        1.0
-store       3.1
-cereal      7.1
-binary      8.2
-serialise  12.7
-packman    18.1
 
-serialization (time)/BinTree Int (best first)
-flat        1.0
-store       4.4
-binary     10.9
-cereal     14.2
-serialise  15.9
-packman    30.0
 
-serialization (time)/Cars dataset (best first)
-store       1.0
-flat        2.0
-serialise   4.2
-binary      6.7
-cereal      7.0
-packman     9.5
 
-serialization (time)/Iris dataset (best first)
-store       1.0
-flat        9.1
-serialise  10.3
-cereal     16.3
-packman    27.0
-binary     90.5
 
-serialization (time)/[Direction] (best first)
-flat        1.0
-store       1.1
-cereal      1.8
-binary      2.2
-serialise   2.2
-packman    12.6
 
-size (bytes)/BinTree Direction (best first)
-flat        1.0
-binary      5.5
-cereal      5.5
-store       5.5
-serialise  10.9
-packman    87.3
 
-size (bytes)/BinTree Int (best first)
-flat        1.0
-serialise   4.2
-binary      8.0
-cereal      8.0
-store       8.0
-packman    41.3
 
-size (bytes)/Cars dataset (best first)
-flat        1.0
-serialise   5.3
-binary      6.1
-cereal      6.1
-store       6.1
-packman    11.3
-
-size (bytes)/Iris dataset (best first)
-packman     1.0
-flat        1.0
-cereal      1.0
-store       1.0
-serialise   1.2
-binary      3.1
-
-size (bytes)/[Direction] (best first)
-flat        1.0
-binary      4.7
-cereal      4.7
-store       4.7
-serialise   9.4
-packman    75.3
-```
