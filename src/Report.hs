@@ -69,7 +69,7 @@ data Measure = Measure
 [("BinTree Direction",[("deserialization (time)",[(1989.0,[Measure {mTest = "deserialization (time)/BinTree Direction-binary", mValue = 1989.0}])]),("serialization (time)",[(1004.0,[Measure {mTest = "serialization (time)/BinTree Direction-binary", mValue = 1004.0}])]),("size (bytes)",[(6291455.0,[Measure {mTest = "size (bytes)/BinTree Direction-binary", mValue = 6291455.0}])])]),("Cars",[("size (bytes)",[(300000.0,[Measure {mTest = "size (bytes)/Cars-flat", mValue = 300000.0}]),(301455.0,[Measure {mTest = "size (bytes)/Cars-binary", mValue = 301455.0}])])])]
 
 >>> renderTable ms 
-"||deserialization (time)|serialization (time)|size (bytes)|\n| ---| ---| ---| ---|\n|BinTree Direction|[binary](https://hackage.haskell.org/package/binary)|[binary](https://hackage.haskell.org/package/binary)|[binary](https://hackage.haskell.org/package/binary)|\n|Cars|||[flat](https://hackage.haskell.org/package/flat),[binary](https://hackage.haskell.org/package/binary)|\n"
+"||deserialization|serialization|size|\n| ---| ---| ---| ---|\n|BinTree|[binary](https://hackage.haskell.org/package/binary)|[binary](https://hackage.haskell.org/package/binary)|[binary](https://hackage.haskell.org/package/binary)|\n||||[flat](https://hackage.haskell.org/package/flat),[binary](https://hackage.haskell.org/package/binary)|\n"
 
 >>> addTransfers_ ms
 fromList [("deserialization (time)/BinTree Direction-binary",Measure {mTest = "deserialization (time)/BinTree Direction-binary", mValue = 1989.0}),("serialization (time)/BinTree Direction-binary",Measure {mTest = "serialization (time)/BinTree Direction-binary", mValue = 1004.0}),("size (bytes)/BinTree Direction-binary",Measure {mTest = "size (bytes)/BinTree Direction-binary", mValue = 6291455.0}),("size (bytes)/Cars-binary",Measure {mTest = "size (bytes)/Cars-binary", mValue = 301455.0}),("size (bytes)/Cars-flat",Measure {mTest = "size (bytes)/Cars-flat", mValue = 300000.0}),("transfer [10 MBits] (time)/BinTree Direction-binary",Measure {mTest = "transfer [10 MBits] (time)/BinTree Direction-binary", mValue = 8026.164}),("transfer [100 MBits] (time)/BinTree Direction-binary",Measure {mTest = "transfer [100 MBits] (time)/BinTree Direction-binary", mValue = 3496.3164}),("transfer [1000 MBits] (time)/BinTree Direction-binary",Measure {mTest = "transfer [1000 MBits] (time)/BinTree Direction-binary", mValue = 3043.33164})]
@@ -79,15 +79,15 @@ renderTable ms =
   let tests = allOf mObj ms
       kinds = allOf mType ms
       vals = allOf mSub ms
-      lines s = s : map (\t -> showPkgs $ map (\v -> tos t s v ms) vals) kinds
-  in unlines . map mdRow $ ("":kinds) : replicate (length kinds+1) " ---" : map lines tests
+      lines s = short s : map (\t -> showPkgs $ map (\v -> tos t s v ms) vals) kinds
+  in unlines . map mdRow $ ("":map short kinds) : replicate (length kinds+1) " ---" : map lines tests
     where
       pkgVals = map snd . tops . sort . catMaybes . map ((\m -> (mValue m,pkgRef $ mSub m)) <$>)
       tops [] = []
       tops hs = let limit = fst (head hs) * 1.3 in takeWhile (\e -> fst e <= limit) hs
       showPkgs = intercalate "," . pkgVals 
       mdRow vs = concat["|",intercalate "|" vs,"|"]
-      pkgRef name = concat ["[",short name,"](https://hackage.haskell.org/package/",name,")"]
+      pkgRef name = concat ["[",name,"](https://hackage.haskell.org/package/",name,")"]
       short = unwords . init . words 
 
 tos :: String -> String -> String -> Measures -> Maybe Measure
@@ -253,7 +253,7 @@ reportsMDFile dir = dir </> "report.md"
 printMeasures :: FilePath -> IO ()
 printMeasures dir = reportMeasures_ dir >>= putStrLn
 
--- printSummary :: FilePath -> IO ()
+printSummary :: FilePath -> (String -> Bool) -> IO ()
 printSummary dir f = readMeasures dir >>= putStrLn . renderTable . M.filter (f . mTest)
 
 reportMeasures :: FilePath -> IO ()

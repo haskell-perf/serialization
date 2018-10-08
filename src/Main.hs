@@ -280,11 +280,11 @@ runBench
   performMajorGC
   let jsonReport = reportsFile workDir
   let htmlReport = "report.html"
-  let tests =
-        benchs directionList ++
-        benchs intTree ++
-        benchs directionTree ++ benchs carsDataset ++ benchs irisDataset
-  -- let tests = []
+  -- let tests =
+  --       benchs directionList ++
+  --       benchs intTree ++
+  --       benchs directionTree ++ benchs carsDataset ++ benchs irisDataset
+  let tests = []
   defaultMainWith
     (defaultConfig {jsonFile = Just jsonReport, reportFile = Just htmlReport}) $
     tests
