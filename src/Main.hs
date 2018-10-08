@@ -46,6 +46,7 @@ import qualified Data.Store as S
 import Dataset
 import qualified GHC.Packing as P
 import Report
+import Data.List
 
 -- Testing and random data generation
 import Test.QuickCheck
@@ -273,9 +274,9 @@ runBench
   !directionList <-
     force . ("[Direction]", ) <$>
     mapM (\_ -> generate $ arbitrary :: IO Direction) [1 .. 100000 :: Int]
-  !carsDataset <- force . ("Cars dataset", ) <$> carsData
+  !carsDataset <- force . ("Cars", ) <$> carsData
     -- !abaloneDataset <- force . ("Abalone dataset",) <$> abaloneData
-  let !irisDataset = force ("Iris dataset", irisData)
+  let !irisDataset = force ("Iris", irisData)
   performMajorGC
   let jsonReport = reportsFile workDir
   let htmlReport = "report.html"
@@ -283,11 +284,11 @@ runBench
         benchs directionList ++
         benchs intTree ++
         benchs directionTree ++ benchs carsDataset ++ benchs irisDataset
-  --let tests = []
+  -- let tests = []
   defaultMainWith
     (defaultConfig {jsonFile = Just jsonReport, reportFile = Just htmlReport}) $
     tests
-  deleteMeasures workDir
+  --deleteMeasures workDir
   updateMeasures workDir
   sizes directionList
   sizes directionTree
@@ -298,7 +299,9 @@ runBench
   putStrLn "Summary:\n"
     -- printMeasuresDiff ms
   -- printMeasures workDir
-  printSummary workDir
+  printSummary workDir ("transfer" `isPrefixOf`)
+  printSummary workDir (not . ("transfer" `isPrefixOf`))
+
   reportMeasures workDir
 
 sizes ::

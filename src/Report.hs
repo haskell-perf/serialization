@@ -87,8 +87,8 @@ renderTable ms =
       tops hs = let limit = fst (head hs) * 1.3 in takeWhile (\e -> fst e <= limit) hs
       showPkgs = intercalate "," . pkgVals 
       mdRow vs = concat["|",intercalate "|" vs,"|"]
-      pkgRef name = concat ["[",name,"](https://hackage.haskell.org/package/",name,")"]
-      
+      pkgRef name = concat ["[",short name,"](https://hackage.haskell.org/package/",name,")"]
+      short = unwords . init . words 
 
 tos :: String -> String -> String -> Measures -> Maybe Measure
 tos t o s ms = M.lookup (concat[t,"/",o,"-",s]) ms
@@ -253,8 +253,8 @@ reportsMDFile dir = dir </> "report.md"
 printMeasures :: FilePath -> IO ()
 printMeasures dir = reportMeasures_ dir >>= putStrLn
 
-printSummary :: FilePath -> IO ()
-printSummary dir = readMeasures dir >>= putStrLn . renderTable . M.filter (("transfer" `isPrefixOf`) . mTest)
+-- printSummary :: FilePath -> IO ()
+printSummary dir f = readMeasures dir >>= putStrLn . renderTable . M.filter (f . mTest)
 
 reportMeasures :: FilePath -> IO ()
 reportMeasures dir =
