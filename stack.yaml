@@ -1,30 +1,27 @@
-# ghc 7.10.3
-resolver: lts-6.35
+system-ghc: false
 
-# ghc 8.0.1
-# PROB: packman won't compile
-# resolver: lts-7.10
+#resolver: lts-11.22
+
+# ghc 8.4.3
+resolver: lts-12.11
+
+# ghc 8.6.1
+#resolver: nightly-2018-10-03
 
 # Local packages, usually specified by relative directory name
 packages:
 - '.'
+# - ../flat
 
 flags:
    serialise:
      newtime15: true
 
 extra-deps:
-- packman-0.3.0
-- binary-0.8.5.1
-- cereal-0.5.4.0
-- flat-0.3
-- store-0.4.3.1
-- store-core-0.4.1
-- serialise-0.1.0.0
-- cborg-0.1.1.0
-- th-utilities-0.2.0.1
+- flat-0.3.2
+- packman-0.5.0
+# - binary-0.8.5.1
+- cereal-0.5.7.0
+- store-0.5.0
+- serialise-0.2.0.0
 - datasets-0.2.1
-- criterion-1.1.4.0
-- code-page-0.1.1
-- optparse-applicative-0.13.0.0
-- mono-traversable-1.0.2
