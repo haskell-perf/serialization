@@ -24,7 +24,7 @@ type Measures = M.Map String Measure
 
 data Measure = Measure
   { mTest :: String -- ^Test name, with the format <test-kind>/<test-obj>-<test-pkg>
-  , mValue :: Double -- ^Execution time (in ms)
+  , mValue :: Double -- ^Execution time (in ms or bytes, depending on the test)
   } deriving (Show, Read, Eq, Generic, NFData, Ord)
 
 {- | 
@@ -69,24 +69,26 @@ data Measure = Measure
 [("BinTree Direction",[("deserialization (time)",[(1989.0,[Measure {mTest = "deserialization (time)/BinTree Direction-binary", mValue = 1989.0}])]),("serialization (time)",[(1004.0,[Measure {mTest = "serialization (time)/BinTree Direction-binary", mValue = 1004.0}])]),("size (bytes)",[(6291455.0,[Measure {mTest = "size (bytes)/BinTree Direction-binary", mValue = 6291455.0}])])]),("Cars",[("size (bytes)",[(300000.0,[Measure {mTest = "size (bytes)/Cars-flat", mValue = 300000.0}]),(301455.0,[Measure {mTest = "size (bytes)/Cars-binary", mValue = 301455.0}])])])]
 
 >>> renderTable ms 
-"||BinTree Direction|Cars|\n|deserialization (time)|binary||\n|serialization (time)|binary||\n|size (bytes)|binary|flat,binary|\n"
+"||deserialization (time)|serialization (time)|size (bytes)|\n| ---| ---| ---| ---|\n|BinTree Direction|[binary](https://hackage.haskell.org/package/binary)|[binary](https://hackage.haskell.org/package/binary)|[binary](https://hackage.haskell.org/package/binary)|\n|Cars|||[flat](https://hackage.haskell.org/package/flat),[binary](https://hackage.haskell.org/package/binary)|\n"
 
 >>> addTransfers_ ms
 fromList [("deserialization (time)/BinTree Direction-binary",Measure {mTest = "deserialization (time)/BinTree Direction-binary", mValue = 1989.0}),("serialization (time)/BinTree Direction-binary",Measure {mTest = "serialization (time)/BinTree Direction-binary", mValue = 1004.0}),("size (bytes)/BinTree Direction-binary",Measure {mTest = "size (bytes)/BinTree Direction-binary", mValue = 6291455.0}),("size (bytes)/Cars-binary",Measure {mTest = "size (bytes)/Cars-binary", mValue = 301455.0}),("size (bytes)/Cars-flat",Measure {mTest = "size (bytes)/Cars-flat", mValue = 300000.0}),("transfer [10 MBits] (time)/BinTree Direction-binary",Measure {mTest = "transfer [10 MBits] (time)/BinTree Direction-binary", mValue = 8026.164}),("transfer [100 MBits] (time)/BinTree Direction-binary",Measure {mTest = "transfer [100 MBits] (time)/BinTree Direction-binary", mValue = 3496.3164}),("transfer [1000 MBits] (time)/BinTree Direction-binary",Measure {mTest = "transfer [1000 MBits] (time)/BinTree Direction-binary", mValue = 3043.33164})]
 -}
 renderTable :: Measures -> String
 renderTable ms = 
-  let cols = allOf mObj ms
-      rows = allOf mType ms
+  let tests = allOf mObj ms
+      kinds = allOf mType ms
       vals = allOf mSub ms
-      lines r = r : map (\c -> showPkgs $ map (\v -> tos r c v ms) vals) cols
-  in unlines . map mdRow $ ("":cols) : replicate (length cols+1) " ---" : map lines rows
+      lines s = s : map (\t -> showPkgs $ map (\v -> tos t s v ms) vals) kinds
+  in unlines . map mdRow $ ("":kinds) : replicate (length kinds+1) " ---" : map lines tests
     where
-      pkgVals = map snd . tops . sort . catMaybes . map ((\m -> (mValue m,mSub m)) <$>)
+      pkgVals = map snd . tops . sort . catMaybes . map ((\m -> (mValue m,pkgRef $ mSub m)) <$>)
       tops [] = []
       tops hs = let limit = fst (head hs) * 1.3 in takeWhile (\e -> fst e <= limit) hs
       showPkgs = intercalate "," . pkgVals 
       mdRow vs = concat["|",intercalate "|" vs,"|"]
+      pkgRef name = concat ["[",name,"](https://hackage.haskell.org/package/",name,")"]
+      
 
 tos :: String -> String -> String -> Measures -> Maybe Measure
 tos t o s ms = M.lookup (concat[t,"/",o,"-",s]) ms
@@ -252,7 +254,7 @@ printMeasures :: FilePath -> IO ()
 printMeasures dir = reportMeasures_ dir >>= putStrLn
 
 printSummary :: FilePath -> IO ()
-printSummary dir = readMeasures dir >>= putStrLn . renderTable
+printSummary dir = readMeasures dir >>= putStrLn . renderTable . M.filter (("transfer" `isPrefixOf`) . mTest)
 
 reportMeasures :: FilePath -> IO ()
 reportMeasures dir =

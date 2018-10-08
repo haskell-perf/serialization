@@ -230,12 +230,12 @@ pkgs ::
      )
   => [(String, a -> IO BS.ByteString, BS.ByteString -> IO a)]
 pkgs =
-  [ ("flat-0.3.2", serialize PkgFlat, deserialize PkgFlat)
-  , ("[store-0.5.0](https://hackage.haskell.org/package/store)", serialize PkgStore, deserialize PkgStore)
-  , ("binary-0.8.5.1", serialize PkgBinary, deserialize PkgBinary)
-  , ("cereal-0.5.7.0", serialize PkgCereal, deserialize PkgCereal)
-  , ("packman-0.5.0", serialize PkgPackman, deserialize PkgPackman)
-  , ("serialise-0.2.0.0", serialize PkgCBOR, deserialize PkgCBOR)
+  [ ("flat", serialize PkgFlat, deserialize PkgFlat)
+  , ("store", serialize PkgStore, deserialize PkgStore)
+  , ("binary", serialize PkgBinary, deserialize PkgBinary)
+  , ("cereal", serialize PkgCereal, deserialize PkgCereal)
+  , ("packman", serialize PkgPackman, deserialize PkgPackman)
+  , ("serialise", serialize PkgCBOR, deserialize PkgCBOR)
   ]
 
 prop :: Serialize lib (BinTree Int) => lib -> Property
@@ -279,15 +279,15 @@ runBench
   performMajorGC
   let jsonReport = reportsFile workDir
   let htmlReport = "report.html"
-  -- let tests =
-  --       benchs directionList ++
-  --       benchs intTree ++
-  --       benchs directionTree ++ benchs carsDataset ++ benchs irisDataset
-  let tests = []
+  let tests =
+        benchs directionList ++
+        benchs intTree ++
+        benchs directionTree ++ benchs carsDataset ++ benchs irisDataset
+  --let tests = []
   defaultMainWith
     (defaultConfig {jsonFile = Just jsonReport, reportFile = Just htmlReport}) $
     tests
-    -- deleteMeasures workDir
+  deleteMeasures workDir
   updateMeasures workDir
   sizes directionList
   sizes directionTree
