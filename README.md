@@ -9,20 +9,22 @@ To merge all these measures in a concrete use case, we also estimate the total t
 For every test and every network speed, the table lists all packages whose transfer speeds are within 30% of the best result (with best package listed first).
 
 
-||BinTree Direction|BinTree Int|Cars dataset|Iris dataset|[Direction]|
-| ---| ---| ---| ---| ---| ---|
-|transfer [10 MBits] (time)|flat0.3.2|flat0.3.2|flat0.3.2|flat0.3.2,store0.5.0,packman0.5.0,cereal0.5.7.0,serialise0.2.0.0|flat0.3.2|
-|transfer [100 MBits] (time)|flat0.3.2,store0.5.0|flat0.3.2|flat0.3.2|store0.5.0,flat0.3.2|store0.5.0,flat0.3.2,cereal0.5.7.0|
-|transfer [1000 MBits] (time)|store0.5.0,flat0.3.2|flat0.3.2,store0.5.0|store0.5.0,flat0.3.2|store0.5.0|store0.5.0,flat0.3.2|
+||transfer [10 MBits] (time)|transfer [100 MBits] (time)|transfer [1000 MBits] (time)|
+| ---| ---| ---| ---|
+|BinTree Direction|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat)|[[store](https://hackage.haskell.org/package/store)](https://hackage.haskell.org/package/[store](https://hackage.haskell.org/package/store)),[flat](https://hackage.haskell.org/package/flat)|
+|BinTree Int|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat)|[[store](https://hackage.haskell.org/package/store)](https://hackage.haskell.org/package/[store](https://hackage.haskell.org/package/store)),[flat](https://hackage.haskell.org/package/flat)|
+|Cars dataset|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat)|[[store](https://hackage.haskell.org/package/store)](https://hackage.haskell.org/package/[store](https://hackage.haskell.org/package/store)),[flat](https://hackage.haskell.org/package/flat)|
+|Iris dataset|[flat](https://hackage.haskell.org/package/flat),[[store](https://hackage.haskell.org/package/store)](https://hackage.haskell.org/package/[store](https://hackage.haskell.org/package/store)),[packman](https://hackage.haskell.org/package/packman),[cereal](https://hackage.haskell.org/package/cereal),[serialise](https://hackage.haskell.org/package/serialise)|[[store](https://hackage.haskell.org/package/store)](https://hackage.haskell.org/package/[store](https://hackage.haskell.org/package/store)),[flat](https://hackage.haskell.org/package/flat)|[[store](https://hackage.haskell.org/package/store)](https://hackage.haskell.org/package/[store](https://hackage.haskell.org/package/store))|
+|[Direction]|[flat](https://hackage.haskell.org/package/flat)|[[store](https://hackage.haskell.org/package/store)](https://hackage.haskell.org/package/[store](https://hackage.haskell.org/package/store)),[flat](https://hackage.haskell.org/package/flat),[cereal](https://hackage.haskell.org/package/cereal)|[[store](https://hackage.haskell.org/package/store)](https://hackage.haskell.org/package/[store](https://hackage.haskell.org/package/store))|
 
 
-## Full Results
+## Results
 
-[Full Results](https://rawgit.com/haskell-perf/serialization/master/report.md)
+[Results](https://rawgit.com/haskell-perf/serialization/master/report.md)
 
 * [Raw Criterion Results](https://rawgit.com/haskell-perf/serialization/master/report.html)
 
-* [Raw Criterion Results in JSON Format], also in [json format](https://raw.githubusercontent.com/haskell-perf/serialization/master/report.json).
+* [Raw Criterion Results in JSON Format](https://raw.githubusercontent.com/haskell-perf/serialization/master/report.json).
 
 
 ## Tested Libraries
@@ -31,12 +33,12 @@ Performance is not the only relevant property, depending on your needs you shoul
 
 | Package                                                            | Laziness | Compatibility             |
 | ---                                                                | ---      | ---                       |
-| [store-0.4.3.1](https://hackage.haskell.org/package/store)         | Strict   | Haskell-Same-Architecture |
-| [packman-0.3.0](http://hackage.haskell.org/package/packman)        | Lazy     | Haskell-Same-Architecture |
-| [cereal-0.5.4.0](http://hackage.haskell.org/package/cereal)        | Strict   | Haskell                   |
+| [store-0.5.0](https://hackage.haskell.org/package/store)         | Strict   | Haskell-Same-Architecture |
+| [packman-0.5.0](http://hackage.haskell.org/package/packman)        | Lazy     | Haskell-Same-Architecture |
+| [cereal-0.5.7.0](http://hackage.haskell.org/package/cereal)        | Strict   | Haskell                   |
 | [binary-0.8.5.1](http://hackage.haskell.org/package/binary)        | Lazy     | Haskell                   |
-| [serialise-0.1.0.0](https://hackage.haskell.org/package/serialise) | Lazy     | Multi-Language            |
-| [flat-0.3](https://github.com/tittoassini/flat)                    | Strict   | Multi-Language            |
+| [serialise-0.2.0.0](https://hackage.haskell.org/package/serialise) | Lazy     | Multi-Language            |
+| [flat-0.3.2](https://hackage.haskell.org/package/flat)                    | Strict   | Multi-Language            |
 
 
 Compatibility Levels (lowest to highest):
