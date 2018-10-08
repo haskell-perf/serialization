@@ -8,7 +8,7 @@ To merge all these measures in a concrete use case, we also estimate the total t
 
 For every test and every network speed, the table lists all packages whose transfer speeds are within 30% of the best result (with best package listed first).
 
-When the network speed is low, transfer times are dominated by the size of the encoded dataset. At higher speeds, by t(de)serialisation times.
+When the network speed is low, transfer times are dominated by the size of the encoded dataset. At higher speeds, by the (de)serialisation times.
 
 ||transfer [10 MBits]|transfer [100 MBits]|transfer [1000 MBits]|
 | ---| ---| ---| ---|
@@ -17,6 +17,8 @@ When the network speed is low, transfer times are dominated by the size of the e
 |Cars|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|
 |Iris|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store),[packman](https://hackage.haskell.org/package/packman),[cereal](https://hackage.haskell.org/package/cereal),[serialise](https://hackage.haskell.org/package/serialise)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store)|
 |[Direction]|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|
+
+And the summary data for the raw measures:
 
 ||deserialization|serialization|size|
 | ---| ---| ---| ---|
