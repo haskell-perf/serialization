@@ -307,7 +307,7 @@ report name rs
  =
   let (_, rss) = report_ rs
       width = maximum . map (length . fst) $ rs
-      out = ["| ---| ---| ---|","| | | |","",unwords [name, "(best first)"]] -- package: "++fst best++" with ",printInt (snd best)++")"]
+      out = ["| ---| ---| ---|","",unwords ["### ",name, "(best first)"]] -- package: "++fst best++" with ",printInt (snd best)++")"]
    in unlines . reverse $
       "" :
       foldl'
