@@ -85,14 +85,7 @@ Try:
 
 `export LC_ALL=C.UTF-8`
 
-The executable will write the *report.md* *report.html* and *report.json* files, containing the full te 
+The executable will write the *report.md*, *report.html* and *report.json* files containing the full test results and will print out the two summary results tables in markdown format.
 
 Tests will be compiled with GHC 8.4.3.
-
-
-
-
-
-
-
 
