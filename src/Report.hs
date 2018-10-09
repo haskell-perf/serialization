@@ -260,7 +260,7 @@ reportMeasures :: FilePath -> IO ()
 reportMeasures dir =
   reportMeasures_ dir >>=
   writeFile (reportsMDFile dir) .
-  ("Results that are within 30% of the best result, are displayed in **bold**." ++)
+  ("Results that are within 30% of the best result, are displayed in **bold**.\n\n" ++)
 
 reportMeasures_ :: FilePath -> IO String
 reportMeasures_ dir = reportMeasures__ (const True) <$> readMeasures dir
@@ -307,7 +307,7 @@ report name rs
  =
   let (_, rss) = report_ rs
       width = maximum . map (length . fst) $ rs
-      out = [unwords [name, "(best first)"]] -- package: "++fst best++" with ",printInt (snd best)++")"]
+      out = ["| ---| ---| ---|","| | | |",unwords [name, "(best first)"]] -- package: "++fst best++" with ",printInt (snd best)++")"]
    in unlines . reverse $
       "" :
       foldl'
@@ -317,10 +317,13 @@ report name rs
                    then "**"
                    else ""
             in unwords
-                 [ mark ++ printString width n
+                 [ "|"
+                 ,mark ++ printString width n
+                 ,"|"
                  , printf "%11.1f" a
+                 ,"|"
                  , printDouble r ++ mark
-                 ] :
+                 , "|"] :
                out)
         out
         rss
