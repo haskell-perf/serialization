@@ -6,7 +6,7 @@ To merge all these measures in a concrete use case, we also estimate the total t
 
 ## Summary Results
 
-For every test and every network speed, the table lists all packages whose transfer speeds are within 30% of the best result (with best package listed first).
+For every test and every network speed, the following table lists all packages whose transfer speeds are within 30% of the best result (with best package listed first).
 
 When the network speed is low, transfer times are dominated by the size of the encoded dataset. At higher speeds, by the (de)serialisation times.
 
@@ -18,7 +18,7 @@ When the network speed is low, transfer times are dominated by the size of the e
 |Iris|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store),[packman](https://hackage.haskell.org/package/packman),[cereal](https://hackage.haskell.org/package/cereal),[serialise](https://hackage.haskell.org/package/serialise)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store)|
 |[Direction]|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|
 
-And the summary data for the raw measures:
+Summary data for deserialization, serialization and size:
 
 ||deserialization|serialization|size|
 | ---| ---| ---| ---|
@@ -31,11 +31,11 @@ And the summary data for the raw measures:
 
 ## Results
 
-[Full Results](https://rawgit.com/haskell-perf/serialization/master/report.md)
+[Results](report.md)
 
-* [Raw Criterion Results](https://rawgit.com/haskell-perf/serialization/master/report.html)
+* [Criterion Results](https://rawgit.com/haskell-perf/serialization/master/report.html)
 
-* [Raw Criterion Results in JSON Format](https://raw.githubusercontent.com/haskell-perf/serialization/master/report.json).
+* [Criterion Results in JSON Format](https://raw.githubusercontent.com/haskell-perf/serialization/master/report.json)
 
 
 ## Tested Libraries
