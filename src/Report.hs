@@ -17,7 +17,7 @@ import System.Directory
 import System.FilePath
 import Text.Printf
 import Data.Bifunctor  
-
+import Data.Char
 
 -- | Map test names to test measures
 type Measures = M.Map String Measure
@@ -69,7 +69,7 @@ data Measure = Measure
 [("BinTree Direction",[("deserialization (time)",[(1989.0,[Measure {mTest = "deserialization (time)/BinTree Direction-binary", mValue = 1989.0}])]),("serialization (time)",[(1004.0,[Measure {mTest = "serialization (time)/BinTree Direction-binary", mValue = 1004.0}])]),("size (bytes)",[(6291455.0,[Measure {mTest = "size (bytes)/BinTree Direction-binary", mValue = 6291455.0}])])]),("Cars",[("size (bytes)",[(300000.0,[Measure {mTest = "size (bytes)/Cars-flat", mValue = 300000.0}]),(301455.0,[Measure {mTest = "size (bytes)/Cars-binary", mValue = 301455.0}])])])]
 
 >>> renderTable ms 
-"||deserialization|serialization|size|\n| ---| ---| ---| ---|\n|BinTree|[binary](https://hackage.haskell.org/package/binary)|[binary](https://hackage.haskell.org/package/binary)|[binary](https://hackage.haskell.org/package/binary)|\n||||[flat](https://hackage.haskell.org/package/flat),[binary](https://hackage.haskell.org/package/binary)|\n"
+"|Dataset\\Measure|deserialization|serialization|size|\n| ---| ---| ---| ---|\n|BinTree Direction|[binary](https://hackage.haskell.org/package/binary)|[binary](https://hackage.haskell.org/package/binary)|[binary](https://hackage.haskell.org/package/binary)|\n|Cars|||[flat](https://hackage.haskell.org/package/flat),[binary](https://hackage.haskell.org/package/binary)|\n"
 
 >>> addTransfers_ ms
 fromList [("deserialization (time)/BinTree Direction-binary",Measure {mTest = "deserialization (time)/BinTree Direction-binary", mValue = 1989.0}),("serialization (time)/BinTree Direction-binary",Measure {mTest = "serialization (time)/BinTree Direction-binary", mValue = 1004.0}),("size (bytes)/BinTree Direction-binary",Measure {mTest = "size (bytes)/BinTree Direction-binary", mValue = 6291455.0}),("size (bytes)/Cars-binary",Measure {mTest = "size (bytes)/Cars-binary", mValue = 301455.0}),("size (bytes)/Cars-flat",Measure {mTest = "size (bytes)/Cars-flat", mValue = 300000.0}),("transfer [10 MBits] (time)/BinTree Direction-binary",Measure {mTest = "transfer [10 MBits] (time)/BinTree Direction-binary", mValue = 8026.164}),("transfer [100 MBits] (time)/BinTree Direction-binary",Measure {mTest = "transfer [100 MBits] (time)/BinTree Direction-binary", mValue = 3496.3164}),("transfer [1000 MBits] (time)/BinTree Direction-binary",Measure {mTest = "transfer [1000 MBits] (time)/BinTree Direction-binary", mValue = 3043.33164})]

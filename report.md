@@ -4,8 +4,8 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **store** | **1.0** |
-| **flat     ** | **    1.0** |
+| ******store    ** | **    ****1.0** |
+| ******flat     ** | **    ****1.0** |
 | cereal    |     2.9 |
 | binary    |     6.1 |
 | packman   |     7.0 |
@@ -15,9 +15,9 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **store    ** | **    1.0** |
-| **cereal   ** | **    1.2** |
-| **flat     ** | **    1.2** |
+| ******store    ** | **    ****1.0** |
+| ******cereal   ** | **    ****1.2** |
+| ******flat     ** | **    ****1.2** |
 | binary    |     4.2 |
 | serialise |     5.2 |
 | packman   |     9.5 |
@@ -26,8 +26,8 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **flat     ** | **    1.0** |
-| **store    ** | **    1.1** |
+| ******flat     ** | **    ****1.0** |
+| ******store    ** | **    ****1.1** |
 | packman   |     1.8 |
 | cereal    |     2.2 |
 | binary    |     5.4 |
@@ -37,8 +37,8 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **store    ** | **    1.0** |
-| **flat     ** | **    1.3** |
+| ******store    ** | **    ****1.0** |
+| ******flat     ** | **    ****1.3** |
 | packman   |     2.3 |
 | serialise |     3.2 |
 | cereal    |     3.3 |
@@ -48,9 +48,9 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **flat     ** | **    1.0** |
-| **cereal   ** | **    1.1** |
-| **store    ** | **    1.2** |
+| ******flat     ** | **    ****1.0** |
+| ******cereal   ** | **    ****1.1** |
+| ******store    ** | **    ****1.2** |
 | binary    |     3.3 |
 | serialise |     4.2 |
 | packman   |     8.0 |
@@ -59,7 +59,7 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **store    ** | **    1.0** |
+| ******store    ** | **    ****1.0** |
 | flat      |     2.9 |
 | cereal    |     8.3 |
 | binary    |    17.8 |
@@ -70,7 +70,7 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **store    ** | **    1.0** |
+| ******store    ** | **    ****1.0** |
 | flat      |     2.0 |
 | cereal    |    14.7 |
 | binary    |    18.2 |
@@ -81,7 +81,7 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **store    ** | **    1.0** |
+| ******store    ** | **    ****1.0** |
 | flat      |     5.0 |
 | cereal    |     5.8 |
 | serialise |     6.1 |
@@ -92,7 +92,7 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **store    ** | **    1.0** |
+| ******store    ** | **    ****1.0** |
 | flat      |     8.9 |
 | serialise |    11.5 |
 | cereal    |    18.0 |
@@ -103,7 +103,7 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **store    ** | **    1.0** |
+| ******store    ** | **    ****1.0** |
 | cereal    |     4.5 |
 | flat      |     5.2 |
 | binary    |     6.0 |
@@ -114,7 +114,7 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **flat     ** | **    1.0** |
+| ******flat     ** | **    ****1.0** |
 | binary    |     5.5 |
 | cereal    |     5.5 |
 | store     |     5.5 |
@@ -125,7 +125,7 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **flat     ** | **    1.0** |
+| ******flat     ** | **    ****1.0** |
 | serialise |     4.2 |
 | binary    |     8.0 |
 | cereal    |     8.0 |
@@ -136,7 +136,7 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **flat     ** | **    1.0** |
+| ******flat     ** | **    ****1.0** |
 | serialise |     5.3 |
 | binary    |     6.1 |
 | cereal    |     6.1 |
@@ -147,29 +147,29 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **packman  ** | **    1.0** |
-| **flat     ** | **    1.0** |
-| **cereal   ** | **    1.0** |
-| **store    ** | **    1.0** |
-| **serialise** | **    1.2** |
+| ******packman  ** | **    ****1.0** |
+| ******flat     ** | **    ****1.0** |
+| ******cereal   ** | **    ****1.0** |
+| ******store    ** | **    ****1.0** |
+| ******serialise** | **    ****1.2** |
 | binary    |     3.1 |
 
 #### size (bytes)/[Direction] (best first)
 
 | package | performance |
 | ---| ---|
-| **flat     ** | **    1.0** |
+| ******flat     ** | **    ****1.0** |
 | binary    |     2.4 |
 | cereal    |     2.4 |
 | store     |     2.4 |
 | serialise |     4.7 |
-| packman   |    75.2 |
+| packman   |    75.3 |
 
 #### transfer [10 MBits] (time)/BinTree Direction (best first)
 
 | package | performance |
 | ---| ---|
-| **flat     ** | **    1.0** |
+| ******flat     ** | **    ****1.0** |
 | store     |     3.5 |
 | cereal    |     4.4 |
 | binary    |     5.7 |
@@ -180,7 +180,7 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **flat     ** | **    1.0** |
+| ******flat     ** | **    ****1.0** |
 | serialise |     4.6 |
 | store     |     6.5 |
 | cereal    |     6.9 |
@@ -191,7 +191,7 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **flat     ** | **    1.0** |
+| ******flat     ** | **    ****1.0** |
 | store     |     4.7 |
 | cereal    |     4.9 |
 | serialise |     5.0 |
@@ -202,29 +202,29 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **flat     ** | **    1.0** |
-| **store    ** | **    1.0** |
-| **packman  ** | **    1.0** |
-| **cereal   ** | **    1.1** |
-| **serialise** | **    1.3** |
+| ******flat     ** | **    ****1.0** |
+| ******store    ** | **    ****1.0** |
+| ******packman  ** | **    ****1.0** |
+| ******cereal   ** | **    ****1.1** |
+| ******serialise** | **    ****1.3** |
 | binary    |     3.3 |
 
 #### transfer [10 MBits] (time)/[Direction] (best first)
 
 | package | performance |
 | ---| ---|
-| **flat     ** | **    1.0** |
+| ******flat     ** | **    ****1.0** |
 | store     |     1.7 |
 | cereal    |     1.8 |
 | binary    |     2.3 |
 | serialise |     4.1 |
-| packman   |    48.9 |
+| packman   |    49.0 |
 
 #### transfer [100 MBits] (time)/BinTree Direction (best first)
 
 | package | performance |
 | ---| ---|
-| **flat     ** | **    1.0** |
+| ******flat     ** | **    ****1.0** |
 | store     |     1.3 |
 | cereal    |     3.2 |
 | binary    |     6.0 |
@@ -235,7 +235,7 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **flat     ** | **    1.0** |
+| ******flat     ** | **    ****1.0** |
 | store     |     2.7 |
 | cereal    |     4.2 |
 | serialise |     5.7 |
@@ -246,7 +246,7 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **flat     ** | **    1.0** |
+| ******flat     ** | **    ****1.0** |
 | store     |     1.8 |
 | cereal    |     2.7 |
 | packman   |     3.9 |
@@ -257,8 +257,8 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **store    ** | **    1.0** |
-| **flat     ** | **    1.1** |
+| ******store    ** | **    ****1.0** |
+| ******flat     ** | **    ****1.1** |
 | packman   |     1.4 |
 | cereal    |     1.4 |
 | serialise |     1.5 |
@@ -268,9 +268,9 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **store    ** | **    1.0** |
-| **flat     ** | **    1.0** |
-| **cereal   ** | **    1.3** |
+| ******store    ** | **    ****1.0** |
+| ******flat     ** | **    ****1.0** |
+| ******cereal   ** | **    ****1.3** |
 | binary    |     2.4 |
 | serialise |     3.6 |
 | packman   |    17.5 |
@@ -279,8 +279,8 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **store    ** | **    1.0** |
-| **flat     ** | **    1.3** |
+| ******store    ** | **    ****1.0** |
+| ******flat     ** | **    ****1.3** |
 | cereal    |     3.7 |
 | binary    |     7.6 |
 | serialise |    10.3 |
@@ -290,8 +290,8 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **flat     ** | **    1.0** |
-| **store    ** | **    1.0** |
+| ******flat     ** | **    ****1.0** |
+| ******store    ** | **    ****1.0** |
 | cereal    |     3.0 |
 | binary    |     5.2 |
 | serialise |     6.2 |
@@ -301,8 +301,8 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **store    ** | **    1.0** |
-| **flat     ** | **    1.2** |
+| ******store    ** | **    ****1.0** |
+| ******flat     ** | **    ****1.2** |
 | cereal    |     2.2 |
 | packman   |     2.6 |
 | binary    |     4.9 |
@@ -312,7 +312,7 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **store    ** | **    1.0** |
+| ******store    ** | **    ****1.0** |
 | flat      |     1.4 |
 | packman   |     2.7 |
 | serialise |     2.7 |
@@ -323,7 +323,7 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **store    ** | **    1.0** |
+| ******store    ** | **    ****1.0** |
 | flat      |     1.3 |
 | cereal    |     1.4 |
 | binary    |     3.1 |
