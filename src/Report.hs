@@ -316,15 +316,15 @@ report name rs
         (\out (n, r, a) ->
            let marked n =
                  if r <= 1.3
-                   then "**"
-                   else ""
+                   then concat ["**",n,"**"] 
+                   else n
             in unwords
                  [ "|"
-                 ,mark ++  printString width n ++mark
+                 ,marked (printString width n)
                  ,"|"
                  -- , printf "%11.1f" a
                  -- ,"|"
-                 , mark ++ printDouble r ++mark
+                 , marked (printDouble r)
                  , "|"] :
                out)
         out
