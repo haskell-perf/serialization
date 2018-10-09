@@ -1,6 +1,7 @@
 Results that are within 30% of the best result, are displayed in **bold**.
 
 deserialization (time)/BinTree Direction (best first)
+
 | | | |
 | ---| ---| ---|
 | **flat      |       369.6 |     1.0** |
@@ -11,6 +12,7 @@ deserialization (time)/BinTree Direction (best first)
 | serialise |      3012.5 |     8.1 |
 
 deserialization (time)/BinTree Int (best first)
+
 | | | |
 | ---| ---| ---|
 | **store     |       360.9 |     1.0** |
@@ -21,6 +23,7 @@ deserialization (time)/BinTree Int (best first)
 | packman   |      3021.7 |     8.4 |
 
 deserialization (time)/Cars (best first)
+
 | | | |
 | ---| ---| ---|
 | **flat      |        17.8 |     1.0** |
@@ -31,6 +34,7 @@ deserialization (time)/Cars (best first)
 | serialise |       115.9 |     6.5 |
 
 deserialization (time)/Iris (best first)
+
 | | | |
 | ---| ---| ---|
 | **store     |        25.2 |     1.0** |
@@ -41,6 +45,7 @@ deserialization (time)/Iris (best first)
 | binary    |       229.6 |     9.1 |
 
 deserialization (time)/[Direction] (best first)
+
 | | | |
 | ---| ---| ---|
 | **flat      |        12.3 |     1.0** |
@@ -51,6 +56,7 @@ deserialization (time)/[Direction] (best first)
 | packman   |       176.2 |    14.3 |
 
 serialization (time)/BinTree Direction (best first)
+
 | | | |
 | ---| ---| ---|
 | **store     |        96.4 |     1.0** |
@@ -61,6 +67,7 @@ serialization (time)/BinTree Direction (best first)
 | packman   |      3062.4 |    31.8 |
 
 serialization (time)/BinTree Int (best first)
+
 | | | |
 | ---| ---| ---|
 | **store     |        88.5 |     1.0** |
@@ -71,6 +78,7 @@ serialization (time)/BinTree Int (best first)
 | packman   |      3704.1 |    41.9 |
 
 serialization (time)/Cars (best first)
+
 | | | |
 | ---| ---| ---|
 | **store     |         2.8 |     1.0** |
@@ -81,6 +89,7 @@ serialization (time)/Cars (best first)
 | binary    |        34.2 |    12.1 |
 
 serialization (time)/Iris (best first)
+
 | | | |
 | ---| ---| ---|
 | **store     |         1.6 |     1.0** |
@@ -91,6 +100,7 @@ serialization (time)/Iris (best first)
 | binary    |       149.5 |    93.5 |
 
 serialization (time)/[Direction] (best first)
+
 | | | |
 | ---| ---| ---|
 | **store     |         2.2 |     1.0** |
@@ -101,9 +111,10 @@ serialization (time)/[Direction] (best first)
 | packman   |        93.9 |    42.1 |
 
 size (bytes)/BinTree Direction (best first)
+
 | | | |
 | ---| ---| ---|
-| **flat      |   1153444.0 |     1.0** |
+| **flat      |   1153601.0 |     1.0** |
 | binary    |   6291455.0 |     5.5 |
 | cereal    |   6291455.0 |     5.5 |
 | store     |   6291455.0 |     5.5 |
@@ -111,16 +122,18 @@ size (bytes)/BinTree Direction (best first)
 | packman   | 100663336.0 |    87.3 |
 
 size (bytes)/BinTree Int (best first)
+
 | | | |
 | ---| ---| ---|
 | **flat      |   2621440.0 |     1.0** |
-| serialise |  10933080.0 |     4.2 |
+| serialise |  10932724.0 |     4.2 |
 | binary    |  20971519.0 |     8.0 |
 | cereal    |  20971519.0 |     8.0 |
 | store     |  20971519.0 |     8.0 |
-| packman   | 108373072.0 |    41.3 |
+| packman   | 108361736.0 |    41.3 |
 
 size (bytes)/Cars (best first)
+
 | | | |
 | ---| ---| ---|
 | **flat      |    114841.0 |     1.0** |
@@ -131,6 +144,7 @@ size (bytes)/Cars (best first)
 | packman   |   1299528.0 |    11.3 |
 
 size (bytes)/Iris (best first)
+
 | | | |
 | ---| ---| ---|
 | **packman   |   2416872.0 |     1.0** |
@@ -141,9 +155,10 @@ size (bytes)/Iris (best first)
 | binary    |   7575008.0 |     3.1 |
 
 size (bytes)/[Direction] (best first)
+
 | | | |
 | ---| ---| ---|
-| **flat      |     42504.0 |     1.0** |
+| **flat      |     42492.0 |     1.0** |
 | binary    |    100008.0 |     2.4 |
 | cereal    |    100008.0 |     2.4 |
 | store     |    100008.0 |     2.4 |
@@ -151,9 +166,10 @@ size (bytes)/[Direction] (best first)
 | packman   |   3200072.0 |    75.3 |
 
 transfer [10 MBits] (time)/BinTree Direction (best first)
+
 | | | |
 | ---| ---| ---|
-| **flat      |      1570.1 |     1.0** |
+| **flat      |      1570.2 |     1.0** |
 | store     |      5521.1 |     3.5 |
 | cereal    |      6918.8 |     4.4 |
 | binary    |      8948.4 |     5.7 |
@@ -161,16 +177,18 @@ transfer [10 MBits] (time)/BinTree Direction (best first)
 | packman   |     86273.5 |    54.9 |
 
 transfer [10 MBits] (time)/BinTree Int (best first)
+
 | | | |
 | ---| ---| ---|
 | **flat      |      2712.2 |     1.0** |
-| serialise |     12221.1 |     4.5 |
+| serialise |     12220.8 |     4.5 |
 | store     |     17226.6 |     6.4 |
 | cereal    |     18306.2 |     6.7 |
 | binary    |     20027.3 |     7.4 |
-| packman   |     93424.3 |    34.4 |
+| packman   |     93415.2 |    34.4 |
 
 transfer [10 MBits] (time)/Cars (best first)
+
 | | | |
 | ---| ---| ---|
 | **flat      |       124.4 |     1.0** |
@@ -181,6 +199,7 @@ transfer [10 MBits] (time)/Cars (best first)
 | packman   |      1099.6 |     8.8 |
 
 transfer [10 MBits] (time)/Iris (best first)
+
 | | | |
 | ---| ---| ---|
 | **flat      |      1987.3 |     1.0** |
@@ -191,6 +210,7 @@ transfer [10 MBits] (time)/Iris (best first)
 | binary    |      6439.1 |     3.2 |
 
 transfer [10 MBits] (time)/[Direction] (best first)
+
 | | | |
 | ---| ---| ---|
 | **flat      |        56.4 |     1.0** |
@@ -201,9 +221,10 @@ transfer [10 MBits] (time)/[Direction] (best first)
 | packman   |      2830.2 |    50.1 |
 
 transfer [100 MBits] (time)/BinTree Direction (best first)
+
 | | | |
 | ---| ---| ---|
-| **flat      |       739.6 |     1.0** |
+| **flat      |       739.7 |     1.0** |
 | store     |       991.3 |     1.3 |
 | cereal    |      2388.9 |     3.2 |
 | binary    |      4418.5 |     6.0 |
@@ -211,16 +232,18 @@ transfer [100 MBits] (time)/BinTree Direction (best first)
 | packman   |     13795.9 |    18.7 |
 
 transfer [100 MBits] (time)/BinTree Int (best first)
+
 | | | |
 | ---| ---| ---|
 | **flat      |       824.8 |     1.0** |
 | store     |      2127.1 |     2.6 |
 | cereal    |      3206.8 |     3.9 |
-| serialise |      4349.3 |     5.3 |
+| serialise |      4349.2 |     5.3 |
 | binary    |      4927.8 |     6.0 |
-| packman   |     15395.7 |    18.7 |
+| packman   |     15394.8 |    18.7 |
 
 transfer [100 MBits] (time)/Cars (best first)
+
 | | | |
 | ---| ---| ---|
 | **flat      |        41.7 |     1.0** |
@@ -231,6 +254,7 @@ transfer [100 MBits] (time)/Cars (best first)
 | serialise |       182.9 |     4.4 |
 
 transfer [100 MBits] (time)/Iris (best first)
+
 | | | |
 | ---| ---| ---|
 | **store     |       224.8 |     1.0** |
@@ -241,6 +265,7 @@ transfer [100 MBits] (time)/Iris (best first)
 | binary    |       985.1 |     4.4 |
 
 transfer [100 MBits] (time)/[Direction] (best first)
+
 | | | |
 | ---| ---| ---|
 | **flat      |        25.8 |     1.0** |
@@ -251,6 +276,7 @@ transfer [100 MBits] (time)/[Direction] (best first)
 | packman   |       526.1 |    20.4 |
 
 transfer [1000 MBits] (time)/BinTree Direction (best first)
+
 | | | |
 | ---| ---| ---|
 | **store     |       538.3 |     1.0** |
@@ -261,6 +287,7 @@ transfer [1000 MBits] (time)/BinTree Direction (best first)
 | packman   |      6548.1 |    12.2 |
 
 transfer [1000 MBits] (time)/BinTree Int (best first)
+
 | | | |
 | ---| ---| ---|
 | **store     |       617.2 |     1.0** |
@@ -268,9 +295,10 @@ transfer [1000 MBits] (time)/BinTree Int (best first)
 | cereal    |      1696.8 |     2.7 |
 | binary    |      3417.8 |     5.5 |
 | serialise |      3562.1 |     5.8 |
-| packman   |      7592.8 |    12.3 |
+| packman   |      7592.7 |    12.3 |
 
 transfer [1000 MBits] (time)/Cars (best first)
+
 | | | |
 | ---| ---| ---|
 | **store     |        26.8 |     1.0** |
@@ -281,6 +309,7 @@ transfer [1000 MBits] (time)/Cars (best first)
 | serialise |       139.0 |     5.2 |
 
 transfer [1000 MBits] (time)/Iris (best first)
+
 | | | |
 | ---| ---| ---|
 | **store     |        46.6 |     1.0** |
@@ -291,6 +320,7 @@ transfer [1000 MBits] (time)/Iris (best first)
 | binary    |       439.7 |     9.4 |
 
 transfer [1000 MBits] (time)/[Direction] (best first)
+
 | | | |
 | ---| ---| ---|
 | **store     |        19.1 |     1.0** |
