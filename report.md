@@ -4,7 +4,7 @@ Results that are within 30% of the best result are displayed in **bold**.
 
 | package | performance |
 | ---| ---|
-| **store    ** | **    1.0** |
+| **store** | **1.0** |
 | **flat     ** | **    1.0** |
 | cereal    |     2.9 |
 | binary    |     6.1 |
