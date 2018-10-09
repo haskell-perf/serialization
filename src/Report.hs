@@ -314,18 +314,18 @@ report name rs
       "" :
       foldl'
         (\out (n, r, a) ->
-           let mark =
+           let marked n =
                  if r <= 1.3
                    then "**"
                    else ""
             in unwords
-                 [ mark ++ "|"
-                 ,printString width n
+                 [ "|"
+                 ,mark ++  printString width n ++mark
                  ,"|"
                  -- , printf "%11.1f" a
                  -- ,"|"
-                 , printDouble r 
-                 , "|"++mark] :
+                 , mark ++ printDouble r ++mark
+                 , "|"] :
                out)
         out
         rss
