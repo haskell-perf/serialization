@@ -6,4 +6,4 @@ run:
 	#stack build --exec serialization-bench --file-watch
 
 dev:
-	stack test serialization:docs --file-watch	
+	stack test serialization:docs --file-watch	--fast
