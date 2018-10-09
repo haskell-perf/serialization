@@ -314,9 +314,11 @@ report name rs
       "" :
       foldl'
         (\out (n, r, a) ->
-           let marked n =
+           let bold n = concat ["**",n,"**"] 
+               marked n =
                  if r <= 1.3
-                   then concat ["**",n,"**"] 
+                   then let (n1,n2) = span isSpace n  -- fix prob with github bold display
+                        in bold n1 ++ bold n2 
                    else n
             in unwords
                  [ "|"
