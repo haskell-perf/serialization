@@ -80,7 +80,7 @@ renderTable ms =
       kinds = allOf mType ms
       vals = allOf mSub ms
       lines s = s : map (\t -> showPkgs $ map (\v -> tos t s v ms) vals) kinds
-  in unlines . map mdRow $ ("":map short kinds) : replicate (length kinds+1) " ---" : map lines tests
+  in unlines . map mdRow $ ("Dataset\\Measure":map short kinds) : replicate (length kinds+1) " ---" : map lines tests
     where
       pkgVals = map snd . tops . sort . catMaybes . map ((\m -> (mValue m,pkgRef $ mSub m)) <$>)
       tops [] = []

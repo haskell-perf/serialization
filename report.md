@@ -79,7 +79,7 @@ serialise        21.6     9.7
 packman          93.9    42.1
 
 size (bytes)/BinTree Direction (best first)
-**flat        1153481.0     1.0**
+**flat        1153319.0     1.0**
 binary      6291455.0     5.5
 cereal      6291455.0     5.5
 store       6291455.0     5.5
@@ -88,11 +88,11 @@ packman   100663336.0    87.3
 
 size (bytes)/BinTree Int (best first)
 **flat        2621440.0     1.0**
-serialise  10931775.0     4.2
+serialise  10932412.0     4.2
 binary     20971519.0     8.0
 cereal     20971519.0     8.0
 store      20971519.0     8.0
-packman   108355096.0    41.3
+packman   108354536.0    41.3
 
 size (bytes)/Cars (best first)
 **flat         114841.0     1.0**
@@ -111,28 +111,28 @@ size (bytes)/Iris (best first)
 binary      7575008.0     3.1
 
 size (bytes)/[Direction] (best first)
-**flat          42477.0     1.0**
+**flat          42468.0     1.0**
 binary       100008.0     2.4
 cereal       100008.0     2.4
 store        100008.0     2.4
 serialise    200002.0     4.7
-packman     3200072.0    75.3
+packman     3200072.0    75.4
 
 transfer [10 MBits] (time)/BinTree Direction (best first)
-**flat           1570.1     1.0**
+**flat           1570.0     1.0**
 store          5521.1     3.5
 cereal         6918.8     4.4
 binary         8948.4     5.7
 serialise     15374.9     9.8
-packman       86273.5    54.9
+packman       86273.5    55.0
 
 transfer [10 MBits] (time)/BinTree Int (best first)
 **flat           2712.2     1.0**
-serialise     12220.0     4.5
+serialise     12220.6     4.5
 store         17226.6     6.4
 cereal        18306.2     6.7
 binary        20027.3     7.4
-packman       93409.9    34.4
+packman       93409.4    34.4
 
 transfer [10 MBits] (time)/Cars (best first)
 **flat            124.4     1.0**
@@ -212,7 +212,7 @@ transfer [1000 MBits] (time)/BinTree Int (best first)
 cereal         1696.8     2.7
 binary         3417.8     5.5
 serialise      3562.1     5.8
-packman        7592.7    12.3
+packman        7592.6    12.3
 
 transfer [1000 MBits] (time)/Cars (best first)
 **store            26.8     1.0**

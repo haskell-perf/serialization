@@ -6,7 +6,7 @@ To merge all these measures in a concrete use case, we also estimate the total t
 
 ## Summary Results
 
-For every test and every network speed, the following table lists all packages whose transfer speeds are within 30% of the best result (with best package listed first).
+For every test and every network speed, the following table lists all packages whose total transfer times are within 30% of the best result (with best package listed first).
 
 When the network speed is low, transfer times are dominated by the size of the encoded dataset. At higher speeds, by the (de)serialisation times.
 
