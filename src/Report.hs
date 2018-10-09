@@ -317,7 +317,7 @@ report name rs
            let bold n = concat ["**",n,"**"] 
                marked n =
                  if r <= 1.3
-                   then let (n1,n2) = span isSpace n  -- fix prob with github bold display
+                   then let (n1,n2) = span (if isSpace (head n) then isSpace else not . isSpace) n  -- fix prob with github bold display
                         in bold n1 ++ bold n2 
                    else n
             in unwords
