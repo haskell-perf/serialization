@@ -2,15 +2,15 @@ Benchmarks for Haskell serialization libraries.
 
 For every library we measure the serialization time, deserialization time and size of the encoded output for a set of test datasets.
 
-To merge all these measures in a concrete use case, we also estimate the total transfer time at different transmission speeds, that's to say the the time that it takes to serialize, move across a network (with no compression and no protocol overheads) and deserialize a given dataset.      
-
 ## Summary Results
 
-For every test and every network speed, the following table lists all packages whose total transfer times are within 30% of the best result (with best package listed first).
+To merge all these measures in a concrete use case, we also estimate the total transfer time at different transmission speeds, that's to say the the time that it takes to serialize, move across a network (with no compression and no protocol overheads) and deserialize a given dataset.
 
 When the network speed is low, transfer times are dominated by the size of the encoded dataset. At higher speeds, by the (de)serialisation times.
 
-||transfer [10 MBits]|transfer [100 MBits]|transfer [1000 MBits]|
+Summary data for total transfer times (at different network speeds), lists all packages whose total transfer times are within 30% of the best result (with best package listed first):
+
+|Dataset\Measure|transfer [10 MBits]|transfer [100 MBits]|transfer [1000 MBits]|
 | ---| ---| ---| ---|
 |BinTree Direction|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|
 |BinTree Int|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|
@@ -20,13 +20,14 @@ When the network speed is low, transfer times are dominated by the size of the e
 
 Summary data for deserialization, serialization and size:
 
-||deserialization|serialization|size|
+|Dataset\Measure|deserialization|serialization|size|
 | ---| ---| ---| ---|
 |BinTree Direction|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
 |BinTree Int|[store](https://hackage.haskell.org/package/store),[cereal](https://hackage.haskell.org/package/cereal),[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
 |Cars|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
 |Iris|[store](https://hackage.haskell.org/package/store)|[store](https://hackage.haskell.org/package/store)|[packman](https://hackage.haskell.org/package/packman),[flat](https://hackage.haskell.org/package/flat),[cereal](https://hackage.haskell.org/package/cereal),[store](https://hackage.haskell.org/package/store),[serialise](https://hackage.haskell.org/package/serialise)|
 |[Direction]|[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
+
 
 
 ## Full Results
