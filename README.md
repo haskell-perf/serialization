@@ -29,9 +29,9 @@ Summary data for deserialization, serialization and size:
 |[Direction]|[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
 
 
-## Results
+## Full Results
 
-[Results](report.md)
+[Full Results](report.md)
 
 * [Criterion Results](https://rawgit.com/haskell-perf/serialization/master/report.html)
 
