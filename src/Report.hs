@@ -319,13 +319,13 @@ report name rs
                    then "**"
                    else ""
             in unwords
-                 [ "|"
-                 ,mark ++ printString width n
+                 [ mark ++ "|"
+                 ,printString width n
                  ,"|"
                  -- , printf "%11.1f" a
                  -- ,"|"
-                 , printDouble r ++ mark
-                 , "|"] :
+                 , printDouble r 
+                 , "|"++mark] :
                out)
         out
         rss
