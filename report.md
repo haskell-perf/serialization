@@ -163,7 +163,7 @@ Results that are within 30% of the best result are displayed in **bold**.
 | cereal    |     2.4 |
 | store     |     2.4 |
 | serialise |     4.7 |
-| packman   |    75.2 |
+| packman   |    75.3 |
 
 #### transfer [10 MBits] (time)/BinTree Direction (best first)
 
@@ -218,7 +218,7 @@ Results that are within 30% of the best result are displayed in **bold**.
 | cereal    |     1.8 |
 | binary    |     2.3 |
 | serialise |     4.1 |
-| packman   |    48.9 |
+| packman   |    49.0 |
 
 #### transfer [100 MBits] (time)/BinTree Direction (best first)
 
