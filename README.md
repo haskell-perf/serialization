@@ -37,7 +37,6 @@ Summary data for deserialization, serialization and size:
 
 * [Criterion Results in JSON Format](https://raw.githubusercontent.com/haskell-perf/serialization/master/report.json)
 
-
 ## Tested Libraries
 
 Performance is not the only relevant property, depending on your needs you should also consider other features like laziness and compatibility.
@@ -51,7 +50,6 @@ Performance is not the only relevant property, depending on your needs you shoul
 | [serialise-0.2.0.0](https://hackage.haskell.org/package/serialise) | Lazy     | Multi-Language            |
 | [flat-0.3.2](https://hackage.haskell.org/package/flat)                    | Strict   | Multi-Language            |
 
-
 Compatibility Levels (lowest to highest):
 * Haskell-Same-Architecture
   - Compatible across Haskell systems sharing the same CPU and endianness
@@ -59,8 +57,6 @@ Compatibility Levels (lowest to highest):
   - Compatible across Haskell systems
 * Multi-Language
   - Compatible across different programming languages
-
-All compiled with GHC 8.4.3.
 
 ## Test Data
 
@@ -88,8 +84,7 @@ Try:
 
 `export LC_ALL=C.UTF-8`
 
-
-
+Tests will be compiled with GHC 8.4.3.
 
 
 
