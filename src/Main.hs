@@ -72,7 +72,7 @@ instance {-# OVERLAPPABLE #-} C.Serialize a => C.Serialize (BinTree a)
 instance {-# OVERLAPPABLE #-} CBOR.Serialise a =>
                               CBOR.Serialise (BinTree a)
 
--- -- Specialised instances, sometime increase performance
+-- -- Specialised instances, might increase performance
 -- instance {-# OVERLAPPING #-} F.Flat [Direction]
 -- instance {-# OVERLAPPING #-} F.Flat (BinTree Direction)
 -- instance {-# OVERLAPPING #-} F.Flat (BinTree Int)
@@ -280,22 +280,27 @@ runBench
   performMajorGC
   let jsonReport = reportsFile workDir
   let htmlReport = "report.html"
-  -- let tests =
-  --       benchs directionList ++
-  --       benchs intTree ++
-  --       benchs directionTree ++ benchs carsDataset ++ benchs irisDataset
-  let tests = []
+  let tests =
+        benchs directionList ++
+        benchs intTree ++
+        benchs directionTree ++ benchs carsDataset ++ benchs irisDataset
+  -- let tests = []
   defaultMainWith
     (defaultConfig {jsonFile = Just jsonReport, reportFile = Just htmlReport}) $
     tests
+
   --deleteMeasures workDir
+
   updateMeasures workDir
+
   sizes directionList
   sizes directionTree
   sizes intTree
   sizes carsDataset
   sizes irisDataset
+
   addTransfers workDir
+
   putStrLn "Summary:\n"
     -- printMeasuresDiff ms
   -- printMeasures workDir
