@@ -6,8 +6,6 @@ import Control.DeepSeq
 import Control.Monad
 import Criterion.IO
 import Criterion.Types
-
--- import Data.Bifunctor(second)
 import Data.List
 import qualified Data.Map as M
 import Data.Maybe
@@ -59,11 +57,6 @@ data Measure = Measure
 
 >>> allOf mType ms
 ["deserialization (time)","serialization (time)","size (bytes)"]
-
--- >>> byType . M.filter (("size" `isPrefixOf`) . mTest) $ ms
--- [("size (bytes)",[Measure {mTest = "size (bytes)/BinTree Direction-binary", mValue = 6291455.0},Measure {mTest = "size (bytes)/BinTree Direction-flat", mValue = 301455.0}])]
-
--- >>> summaryTable . M.filter (("size" `isPrefixOf`) . mTest) $ ms
 
 >>> summaryTable ms
 [("BinTree Direction",[("deserialization (time)",[(1989.0,[Measure {mTest = "deserialization (time)/BinTree Direction-binary", mValue = 1989.0}])]),("serialization (time)",[(1004.0,[Measure {mTest = "serialization (time)/BinTree Direction-binary", mValue = 1004.0}])]),("size (bytes)",[(6291455.0,[Measure {mTest = "size (bytes)/BinTree Direction-binary", mValue = 6291455.0}])])]),("Cars",[("size (bytes)",[(300000.0,[Measure {mTest = "size (bytes)/Cars-flat", mValue = 300000.0}]),(301455.0,[Measure {mTest = "size (bytes)/Cars-binary", mValue = 301455.0}])])])]
@@ -201,10 +194,6 @@ updateMeasures_ dir = do
 
 addMeasures_ :: FilePath -> Measures -> IO (Measures, Measures, Measures)
 addMeasures_ dir m' = addMeasures__ dir (const m')
-  -- !m <- readMeasures dir
-  -- let m'' = M.union m' m
-  -- writeMeasures dir m''
-  -- return (m, m', m'')
 
 addMeasures__ ::
      FilePath -> (Measures -> Measures) -> IO (Measures, Measures, Measures)
@@ -272,7 +261,6 @@ printMeasuresCurrent (_, m', m'') =
 
 printMeasuresAll_ :: ((String, [(String, Double)]) -> Bool) -> Measures -> IO ()
 printMeasuresAll_ f
-  -- mapM_ (putStrLn . uncurry report) . filter f . allTests . byTestKind
  = putStrLn . reportMeasures__ f
 
 reportMeasures__ :: ((String, [(String, Double)]) -> Bool) -> Measures -> String
@@ -287,7 +275,6 @@ printMeasuresDiff (m, m', _) =
     m
     m'
 
---  mapM_ (\(n,d) -> putStrLn (unwords [n,show d,"%"])) . M.toList $ M.intersectionWithKey (\k a b ->(k,round ((mValue b/mValue a-1)*100))) m m'
 readReports :: FilePath -> IO [Report]
 readReports jsonReportFile = do
   fe <- doesFileExist jsonReportFile
@@ -303,13 +290,11 @@ readReports jsonReportFile = do
 report :: String -> [(String, Double)] -> String
 report _ [] = []
 report name rs
-  -- print rs
  =
   let (_, rss) = report_ rs
       width = maximum . map (length . fst) $ rs
       out = ["| ---| ---|","| package | performance |","",unwords ["####",name, "(best first)"]] 
       -- out = ["| ---| ---| ---|","| package | measure | relative measure |","",unwords ["####",name, "(best first)"]] 
-      -- package: "++fst best++" with ",printInt (snd best)++")"]
    in unlines . reverse $
       "" :
       foldl'
@@ -323,22 +308,20 @@ report name rs
                    else n
             in unwords
                  [ "|"
-                 ,marked (printString width n)
+                 ,marked (printString width n) -- pkg name
                  ,"|"
-                 -- , printf "%11.1f" a
+                 -- , printf "%11.1f" a -- absolute measure
                  -- ,"|"
-                 , marked (printDouble r)
+                 , marked (printDouble r) -- relative measure
                  , "|"] :
                out)
         out
         rss
 
--- report_ :: (Fractional c, Ord c) => [(a, c)] -> ((a, c), [(a, c)])
 report_ :: (Fractional c, Ord c) => [(a, c)] -> ((a, c), [(a, c, c)])
 report_ rs =
   let rss = sortOn snd rs
       best = snd . head $ rss
-  -- in (head rss, map (second (/ best)) rss)
    in (head rss, map (\(n, v) -> (n, v / best, v)) rss)
 
 printDouble :: Double -> String
