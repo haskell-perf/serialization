@@ -1,14 +1,57 @@
-Time and size benchmarks for the following Haskell serialization libraries:
+Benchmarks for Haskell serialization libraries.
 
+For every library we measure the serialization time, deserialization time and size of the encoded output for a set of test datasets.
+
+## Summary Results
+
+To merge all these measures in a concrete use case, we also estimate the total transfer time at different transmission speeds, that's to say the the time that it takes to serialize, move across a network (with no compression and no protocol overheads) and deserialize a given dataset.
+
+When the network speed is low, transfer times are dominated by the size of the encoded dataset. At higher speeds, by the (de)serialisation times.
+
+Summary data for total transfer times (at different network speeds), lists all packages whose total transfer times are within 30% of the best result (with best package listed first):
+
+|Dataset\Measure|transfer [10 MBits]|transfer [100 MBits]|transfer [1000 MBits]|
+| ---| ---| ---| ---|              
+|BinTree Direction|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|
+|BinTree Int|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store)|
+|Cars|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|
+|Iris|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store),[packman](https://hackage.haskell.org/package/packman),[cereal](https://hackage.haskell.org/package/cereal),[serialise](https://hackage.haskell.org/package/serialise)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store)|
+|[Direction]|[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat),[cereal](https://hackage.haskell.org/package/cereal)|[store](https://hackage.haskell.org/package/store)|
+
+Note: tests are executed on an Intel Xeon W3520 @ 2.67GHz. On a slower machine, de(serialization) times would matter more, on a faster machine size would be more significant.
+
+Summary data for deserialization, serialization and size:
+
+|Dataset\Measure|deserialization|serialization|size|
+| ---| ---| ---| ---|              
+|BinTree Direction|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
+|BinTree Int|[store](https://hackage.haskell.org/package/store),[cereal](https://hackage.haskell.org/package/cereal),[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
+|Cars|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
+|Iris|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store)|[packman](https://hackage.haskell.org/package/packman),[flat](https://hackage.haskell.org/package/flat),[cereal](https://hackage.haskell.org/package/cereal),[store](https://hackage.haskell.org/package/store),[serialise](https://hackage.haskell.org/package/serialise)|
+|[Direction]|[flat](https://hackage.haskell.org/package/flat),[cereal](https://hackage.haskell.org/package/cereal),[store](https://hackage.haskell.org/package/store)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
+
+
+
+## Full Results
+
+[Full Results](report.md)
+
+* [Criterion Results](https://rawgit.com/haskell-perf/serialization/master/report.html)
+
+* [Criterion Results in JSON Format](https://raw.githubusercontent.com/haskell-perf/serialization/master/report.json)
+
+## Tested Libraries
+
+Performance is not the only relevant property, depending on your needs you should also consider other features like laziness and compatibility.
 
 | Package                                                            | Laziness | Compatibility             |
 | ---                                                                | ---      | ---                       |
-| [store-0.4.3.1](https://hackage.haskell.org/package/store)         | Strict   | Haskell-Same-Architecture |
-| [packman-0.3.0](http://hackage.haskell.org/package/packman)        | Lazy     | Haskell-Same-Architecture |
-| [cereal-0.5.4.0](http://hackage.haskell.org/package/cereal)        | Strict   | Haskell                   |
+| [store-0.5.0](https://hackage.haskell.org/package/store)         | Strict   | Haskell-Same-Architecture |
+| [packman-0.5.0](http://hackage.haskell.org/package/packman)        | Lazy     | Haskell-Same-Architecture |
+| [cereal-0.5.7.0](http://hackage.haskell.org/package/cereal)        | Strict   | Haskell                   |
 | [binary-0.8.5.1](http://hackage.haskell.org/package/binary)        | Lazy     | Haskell                   |
-| [serialise-0.1.0.0](https://hackage.haskell.org/package/serialise) | Lazy     | Multi-Language            |
-| [flat-0.3](https://github.com/tittoassini/flat)                    | Strict   | Multi-Language            |
+| [serialise-0.2.0.0](https://hackage.haskell.org/package/serialise) | Lazy     | Multi-Language            |
+| [flat-0.3.2](https://hackage.haskell.org/package/flat)                    | Strict   | Multi-Language            |
 
 Compatibility Levels (lowest to highest):
 * Haskell-Same-Architecture
@@ -17,20 +60,6 @@ Compatibility Levels (lowest to highest):
   - Compatible across Haskell systems
 * Multi-Language
   - Compatible across different programming languages
-
-## Tests
-
-To run the benchmarks:
-
-`stack bench`
-
-If you get this error:
-
-`...<stdout>: commitBuffer: invalid argument (invalid character)`
-
-Try:
-
-`export LC_ALL=C.UTF-8`
 
 ## Test Data
 
@@ -44,130 +73,21 @@ Try:
 
 Shout if you would like other tests to be added!
 
-## Full Results
+## Running the Benchmarks
 
-[Full Criterion Report](https://rawgit.com/haskell-perf/serialization/master/report.html), also in [json format](https://raw.githubusercontent.com/haskell-perf/serialization/master/report.json).
+Run the benchmarks with:
 
-## Summary Results
+`stack bench :all`
 
-```
-deserialization (time)/BinTree Direction (best first)
-store       1.0
-cereal      1.0
-flat        1.2
-binary      4.8
-serialise   5.6
-packman     6.9
+If you get this error:
 
-deserialization (time)/BinTree Int (best first)
-store       1.0
-flat        1.2
-cereal      1.2
-binary      3.2
-serialise   3.8
-packman     8.3
+`...<stdout>: commitBuffer: invalid argument (invalid character)`
 
-deserialization (time)/Cars dataset (best first)
-store       1.0
-cereal      1.1
-flat        1.3
-packman     2.1
-binary      4.9
-serialise   5.1
+Try:
 
-deserialization (time)/Iris dataset (best first)
-store       1.0
-flat        1.8
-packman     2.3
-serialise   2.6
-cereal      3.0
-binary     10.1
+`export LC_ALL=C.UTF-8`
 
-deserialization (time)/[Direction] (best first)
-store       1.0
-cereal      1.1
-flat        1.4
-binary      5.4
-serialise   5.5
-packman     6.7
+The executable will write the *report.md*, *report.html* and *report.json* files containing the full test results and will print out the two summary results tables in markdown format.
 
-serialization (time)/BinTree Direction (best first)
-flat        1.0
-store       3.1
-cereal      7.1
-binary      8.2
-serialise  12.7
-packman    18.1
+Tests will be compiled with GHC 8.4.3.
 
-serialization (time)/BinTree Int (best first)
-flat        1.0
-store       4.4
-binary     10.9
-cereal     14.2
-serialise  15.9
-packman    30.0
-
-serialization (time)/Cars dataset (best first)
-store       1.0
-flat        2.0
-serialise   4.2
-binary      6.7
-cereal      7.0
-packman     9.5
-
-serialization (time)/Iris dataset (best first)
-store       1.0
-flat        9.1
-serialise  10.3
-cereal     16.3
-packman    27.0
-binary     90.5
-
-serialization (time)/[Direction] (best first)
-flat        1.0
-store       1.1
-cereal      1.8
-binary      2.2
-serialise   2.2
-packman    12.6
-
-size (bytes)/BinTree Direction (best first)
-flat        1.0
-binary      5.5
-cereal      5.5
-store       5.5
-serialise  10.9
-packman    87.3
-
-size (bytes)/BinTree Int (best first)
-flat        1.0
-serialise   4.2
-binary      8.0
-cereal      8.0
-store       8.0
-packman    41.3
-
-size (bytes)/Cars dataset (best first)
-flat        1.0
-serialise   5.3
-binary      6.1
-cereal      6.1
-store       6.1
-packman    11.3
-
-size (bytes)/Iris dataset (best first)
-packman     1.0
-flat        1.0
-cereal      1.0
-store       1.0
-serialise   1.2
-binary      3.1
-
-size (bytes)/[Direction] (best first)
-flat        1.0
-binary      4.7
-cereal      4.7
-store       4.7
-serialise   9.4
-packman    75.3
-```
