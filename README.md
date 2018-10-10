@@ -11,24 +11,24 @@ When the network speed is low, transfer times are dominated by the size of the e
 Summary data for total transfer times (at different network speeds), lists all packages whose total transfer times are within 30% of the best result (with best package listed first):
 
 |Dataset\Measure|transfer [10 MBits]|transfer [100 MBits]|transfer [1000 MBits]|
-| ---| ---| ---| ---|              
-|BinTree Direction|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|
-|BinTree Int|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store)|
+| ---| ---| ---| ---|            
+|BinTree Direction|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|
+|BinTree Int|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|
 |Cars|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|
 |Iris|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store),[packman](https://hackage.haskell.org/package/packman),[cereal](https://hackage.haskell.org/package/cereal),[serialise](https://hackage.haskell.org/package/serialise)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store)|
-|[Direction]|[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat),[cereal](https://hackage.haskell.org/package/cereal)|[store](https://hackage.haskell.org/package/store)|
+|[Direction]|[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat),[cereal](https://hackage.haskell.org/package/cereal)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|
 
 Note: tests are executed on an Intel Xeon W3520 @ 2.67GHz. On a slower machine, de(serialization) times would matter more, on a faster machine size would be more significant.
 
 Summary data for deserialization, serialization and size:
 
 |Dataset\Measure|deserialization|serialization|size|
-| ---| ---| ---| ---|              
-|BinTree Direction|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
-|BinTree Int|[store](https://hackage.haskell.org/package/store),[cereal](https://hackage.haskell.org/package/cereal),[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
+| ---| ---| ---| ---|            
+|BinTree Direction|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
+|BinTree Int|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat),[cereal](https://hackage.haskell.org/package/cereal)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
 |Cars|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
 |Iris|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store)|[packman](https://hackage.haskell.org/package/packman),[flat](https://hackage.haskell.org/package/flat),[cereal](https://hackage.haskell.org/package/cereal),[store](https://hackage.haskell.org/package/store),[serialise](https://hackage.haskell.org/package/serialise)|
-|[Direction]|[flat](https://hackage.haskell.org/package/flat),[cereal](https://hackage.haskell.org/package/cereal),[store](https://hackage.haskell.org/package/store)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
+|[Direction]|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store),[cereal](https://hackage.haskell.org/package/cereal)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
 
 
 
