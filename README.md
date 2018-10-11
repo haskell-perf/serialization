@@ -6,12 +6,9 @@ For every library, we measure the serialization time, deserialization time and s
 
 The summary tables list, for every test, all libraries that are within 30% of the best result (with best library listed first).
 
-
 ### Transfer Time
 
 To merge all measures in a concrete use case, we estimate the total transfer time at different transmission speeds, that's to say the the time that it takes to serialize, move across a network (with no compression and no protocol overheads) and deserialize a given dataset.
-
-When the network speed is low, transfer times are dominated by the size of the encoded dataset. At higher speeds, by the (de)serialisation times.
 
 |Dataset\Measure|transfer [10 MBits]|transfer [100 MBits]|transfer [1000 MBits]|
 | ---| ---| ---| ---|            
@@ -21,7 +18,9 @@ When the network speed is low, transfer times are dominated by the size of the e
 |Iris|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store),[packman](https://hackage.haskell.org/package/packman),[cereal](https://hackage.haskell.org/package/cereal),[serialise](https://hackage.haskell.org/package/serialise)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store)|
 |[Direction]|[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat),[cereal](https://hackage.haskell.org/package/cereal)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|
 
-Note: tests are executed on an Intel Xeon W3520 @ 2.67GHz. On a slower machine, de(serialization) times would matter more, on a faster machine size would be more significant.
+When the network speed is low, transfer times are dominated by the size of the encoded dataset. At higher speeds, by the (de)serialisation times.
+
+Tests are executed on an Intel Xeon W3520 @ 2.67GHz. On a slower machine, de(serialization) times would matter more, on a faster machine size would be more significant.
 
 ### (De)serialization Times and Size
 
