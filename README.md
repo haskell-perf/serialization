@@ -1,14 +1,16 @@
 Benchmarks for Haskell serialization libraries.
 
-For every library we measure the serialization time, deserialization time and size of the encoded output for a set of test datasets.
+For every library, we measure the serialization time, deserialization time and size of the encoded output for a set of test datasets.
 
 ## Summary Results
 
-To merge all these measures in a concrete use case, we also estimate the total transfer time at different transmission speeds, that's to say the the time that it takes to serialize, move across a network (with no compression and no protocol overheads) and deserialize a given dataset.
+The summary tables list, for every test, all libraries that are within 30% of the best result (with best library listed first).
+
+### Transfer Time
+
+To merge all measures in a concrete use case, we estimate the total transfer time at different transmission speeds, that's to say the the time that it takes to serialize, move across a network (with no compression and no protocol overheads) and deserialize a given dataset.
 
 When the network speed is low, transfer times are dominated by the size of the encoded dataset. At higher speeds, by the (de)serialisation times.
-
-Summary data for total transfer times (at different network speeds), lists all packages whose total transfer times are within 30% of the best result (with best package listed first):
 
 |Dataset\Measure|transfer [10 MBits]|transfer [100 MBits]|transfer [1000 MBits]|
 | ---| ---| ---| ---|            
@@ -20,7 +22,7 @@ Summary data for total transfer times (at different network speeds), lists all p
 
 Note: tests are executed on an Intel Xeon W3520 @ 2.67GHz. On a slower machine, de(serialization) times would matter more, on a faster machine size would be more significant.
 
-Summary data for deserialization, serialization and size:
+### (De)serialization Times and Size
 
 |Dataset\Measure|deserialization|serialization|size|
 | ---| ---| ---| ---|            
@@ -29,7 +31,6 @@ Summary data for deserialization, serialization and size:
 |Cars|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
 |Iris|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store)|[packman](https://hackage.haskell.org/package/packman),[flat](https://hackage.haskell.org/package/flat),[cereal](https://hackage.haskell.org/package/cereal),[store](https://hackage.haskell.org/package/store),[serialise](https://hackage.haskell.org/package/serialise)|
 |[Direction]|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store),[cereal](https://hackage.haskell.org/package/cereal)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
-
 
 
 ## Full Results
