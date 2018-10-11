@@ -6,6 +6,7 @@ For every library, we measure the serialization time, deserialization time and s
 
 The summary tables list, for every test, all libraries that are within 30% of the best result (with best library listed first).
 
+
 ### Transfer Time
 
 To merge all measures in a concrete use case, we estimate the total transfer time at different transmission speeds, that's to say the the time that it takes to serialize, move across a network (with no compression and no protocol overheads) and deserialize a given dataset.
