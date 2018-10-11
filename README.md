@@ -33,6 +33,7 @@ Tests are executed on an Intel Xeon W3520 @ 2.67GHz. On a slower machine, de(ser
 |[Direction]|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store),[cereal](https://hackage.haskell.org/package/cereal)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
 
 
+
 ## Full Results
 
 [Full Results](report.md)
