@@ -11,7 +11,7 @@ The summary tables list, for every test, all libraries that are within 30% of th
 To merge all measures in a concrete use case, we estimate the total transfer time at different transmission speeds, that's to say the the time that it takes to serialize, move across a network (with no compression and no protocol overheads) and deserialize a given dataset.
 
 |Dataset\Measure|transfer [10 MBits]|transfer [100 MBits]|transfer [1000 MBits]|
-| ---| ---| ---| ---|            
+| ---| ---| ---| ---|
 |BinTree Direction|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|
 |BinTree Int|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|
 |Cars|[flat](https://hackage.haskell.org/package/flat)|[flat](https://hackage.haskell.org/package/flat)|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat)|
@@ -25,7 +25,7 @@ Tests are executed on an Intel Xeon W3520 @ 2.67GHz. On a slower machine, de(ser
 ### (De)serialization Times and Size
 
 |Dataset\Measure|deserialization|serialization|size|
-| ---| ---| ---| ---|            
+| ---| ---| ---| ---|
 |BinTree Direction|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
 |BinTree Int|[store](https://hackage.haskell.org/package/store),[flat](https://hackage.haskell.org/package/flat),[cereal](https://hackage.haskell.org/package/cereal)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
 |Cars|[flat](https://hackage.haskell.org/package/flat),[store](https://hackage.haskell.org/package/store)|[store](https://hackage.haskell.org/package/store)|[flat](https://hackage.haskell.org/package/flat)|
@@ -48,12 +48,13 @@ Performance is not the only relevant property, depending on your needs you shoul
 
 | Package                                                            | Laziness | Compatibility             |
 | ---                                                                | ---      | ---                       |
-| [store-0.5.0](https://hackage.haskell.org/package/store)         | Strict   | Haskell-Same-Architecture |
+| [store-0.5.0](https://hackage.haskell.org/package/store)           | Strict   | Haskell-Same-Architecture |
 | [packman-0.5.0](http://hackage.haskell.org/package/packman)        | Lazy     | Haskell-Same-Architecture |
 | [cereal-0.5.7.0](http://hackage.haskell.org/package/cereal)        | Strict   | Haskell                   |
 | [binary-0.8.5.1](http://hackage.haskell.org/package/binary)        | Lazy     | Haskell                   |
 | [serialise-0.2.0.0](https://hackage.haskell.org/package/serialise) | Lazy     | Multi-Language            |
-| [flat-0.3.2](https://hackage.haskell.org/package/flat)                    | Strict   | Multi-Language            |
+| [flat-0.3.2](https://hackage.haskell.org/package/flat)             | Strict   | Multi-Language            |
+| [persist-0.1](https://hackage.haskell.org/package/persist)         | Strict   | Haskell            |
 
 Compatibility Levels (lowest to highest):
 * Haskell-Same-Architecture
