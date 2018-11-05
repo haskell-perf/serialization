@@ -15,31 +15,14 @@ module Main where
 import Control.DeepSeq
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.Lazy as LBS
-
--- import           Data.Monoid                         ((<>))
+import qualified Data.Text as T
+import qualified Data.Text.Encoding as T
 import Data.Typeable
-
--- import           Data.Word
--- import           Criterion.IO
 import Criterion.Types
-
--- import           Data.Bifunctor
 import qualified Data.Binary as B
-
--- import           Data.Binary.Serialise.CBOR as CBOR
 import Codec.Serialise as CBOR
-
--- import           Data.List
--- import           Data.Ord
 import GHC.Generics
-
--- import           Statistics.Resampling.Bootstrap
 import System.Mem (performMajorGC)
-
--- import           System.Random
--- import           Text.Printf
--- import           Data.Binary.Serialise.CBOR.Decoding as CBOR
--- import           Data.Binary.Serialise.CBOR.Encoding as CBOR
 import qualified Data.Flat as F
 import qualified Data.Serialize as C
 import qualified Data.Store as S
@@ -58,7 +41,7 @@ data BinTree a
   = Tree (BinTree a)
          (BinTree a)
   | Leaf a
-  deriving (Show, Eq, Typeable, Generic)
+  deriving (Show, Read, Eq, Typeable, Generic)
 
 -- General instances
 instance {-# OVERLAPPABLE #-} F.Flat a => F.Flat (BinTree a)
@@ -88,6 +71,10 @@ instance {-# OVERLAPPABLE #-} CBOR.Serialise a =>
 -- instance {-# OVERLAPPING #-} CBOR.Serialise [Direction]
 -- instance {-# OVERLAPPING #-} CBOR.Serialise (BinTree Direction)
 -- instance {-# OVERLAPPING #-} CBOR.Serialise (BinTree Int)
+
+-- instance {-# OVERLAPPING #-} F.Flat [Car]
+-- instance {-# OVERLAPPING #-} F.Flat [Iris]
+
 instance NFData a => NFData (BinTree a) where
   rnf (Leaf a) = rnf a `seq` ()
   rnf (Tree left right) = rnf left `seq` rnf right `seq` ()
@@ -178,6 +165,9 @@ data PkgFlat =
 data PkgStore =
   PkgStore
 
+data PkgShow =
+    PkgShow  
+
 class Serialize lib a where
   serialize :: lib -> a -> IO BS.ByteString
   deserialize :: lib -> BS.ByteString -> IO a
@@ -220,6 +210,12 @@ instance (F.Flat a, NFData a) => Serialize PkgFlat a where
   {-# NOINLINE deserialize #-}
   deserialize _ = return . force . fromRight . F.unflat
 
+instance (Show a, Read a, NFData a) => Serialize PkgShow a where
+    {-# NOINLINE serialize #-}
+    serialize _ = return . force .  T.encodeUtf8 . T.pack . show
+    {-# NOINLINE deserialize #-}
+    deserialize _ = return . force . read . T.unpack . T.decodeUtf8
+
 pkgs ::
      ( NFData a
      , C.Serialize a
@@ -228,8 +224,14 @@ pkgs ::
      , S.Store a
      , F.Flat a
      , B.Binary a
+     , Show a
+     , Read a
      )
   => [(String, a -> IO BS.ByteString, BS.ByteString -> IO a)]
+-- pkgs =
+--     [ ("flat-ser", serialize PkgFlat, deserialize PkgFlat)
+--      , ("store-ser", serialize PkgStore, deserialize PkgStore)]
+--   ]
 pkgs =
   [ ("flat", serialize PkgFlat, deserialize PkgFlat)
   , ("store", serialize PkgStore, deserialize PkgStore)
@@ -237,6 +239,7 @@ pkgs =
   , ("cereal", serialize PkgCereal, deserialize PkgCereal)
   , ("packman", serialize PkgPackman, deserialize PkgPackman)
   , ("serialise", serialize PkgCBOR, deserialize PkgCBOR)
+  , ("show", serialize PkgShow, deserialize PkgShow)
   ]
 
 prop :: Serialize lib (BinTree Int) => lib -> Property
@@ -266,6 +269,8 @@ runBench :: IO ()
 runBench
   -- Data structures to (de)serialise
  = do
+
+  -- datasets
   !intTree <-
     force . ("BinTree Int", ) <$> (generateBalancedTree 21 :: IO (BinTree Int))
   !directionTree <-
@@ -277,14 +282,18 @@ runBench
   !carsDataset <- force . ("Cars", ) <$> carsData
     -- !abaloneDataset <- force . ("Abalone dataset",) <$> abaloneData
   let !irisDataset = force ("Iris", irisData)
+
   performMajorGC
+
   let jsonReport = reportsFile workDir
   let htmlReport = "report.html"
+
   let tests =
         benchs directionList ++
         benchs intTree ++
         benchs directionTree ++ benchs carsDataset ++ benchs irisDataset
   -- let tests = []
+
   defaultMainWith
     (defaultConfig {jsonFile = Just jsonReport, reportFile = Just htmlReport}) $
     tests
@@ -316,7 +325,7 @@ sizes ::
      , F.Flat t
      , Serialise t
      , C.Serialize t
-     , S.Store t
+     , S.Store t,Show t, Read t
      )
   => (String, t)
   -> IO ()
@@ -336,7 +345,7 @@ benchs ::
      , F.Flat a
      , Serialise a
      , C.Serialize a
-     , S.Store a
+     , S.Store a,Read a,Show a
      )
   => (String, a)
   -> [Benchmark]
@@ -344,7 +353,7 @@ benchs (name, obj) =
   let nm pkg = concat [name, "-", pkg]
                                                                           -- env (return obj) $ \sobj -> bgroup ("serialization (mSecs)") $ map (\(pkg,s,_) -> bench (nm pkg) (nfIO (s sobj))) pkgs
    in [ bgroup "serialization (time)" $
-        map (\(pkg, s, _) -> bench (nm pkg) (nfIO (s obj))) pkgs
+        map (\(pkg, s, _) -> bench (nm pkg) (nfIO (BS.length <$> s obj))) pkgs
                                                                           -- NOTE: the benchmark time includes the comparison of the deserialised obj with the original
       , bgroup "deserialization (time)" $
         map
