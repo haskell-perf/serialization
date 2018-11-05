@@ -1,9 +1,7 @@
 system-ghc: false
 
-#resolver: lts-11.22
-
-# ghc 8.4.3
-resolver: lts-12.11
+# ghc 8.4.4
+resolver: lts-12.16
 
 # ghc 8.6.1
 #resolver: nightly-2018-10-03
