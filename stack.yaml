@@ -19,6 +19,7 @@ flags:
 
 extra-deps:
 - flat-0.3.2
+- persist-0.1
 - packman-0.5.0
 # - binary-0.8.5.1
 - cereal-0.5.7.0

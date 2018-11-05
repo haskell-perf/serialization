@@ -25,6 +25,7 @@ import GHC.Generics
 import System.Mem (performMajorGC)
 import qualified Data.Flat as F
 import qualified Data.Serialize as C
+import qualified Data.Persist as R
 import qualified Data.Store as S
 import Dataset
 import qualified GHC.Packing as P
@@ -51,6 +52,8 @@ instance {-# OVERLAPPABLE #-} S.Store a => S.Store (BinTree a)
 instance {-# OVERLAPPABLE #-} B.Binary a => B.Binary (BinTree a)
 
 instance {-# OVERLAPPABLE #-} C.Serialize a => C.Serialize (BinTree a)
+
+instance {-# OVERLAPPABLE #-} R.Persist a => R.Persist (BinTree a)
 
 instance {-# OVERLAPPABLE #-} CBOR.Serialise a =>
                               CBOR.Serialise (BinTree a)
@@ -102,6 +105,7 @@ data Direction
            , C.Serialize
            , CBOR.Serialise
            , S.Store
+           , R.Persist
            , F.Flat
            )
 
@@ -150,6 +154,9 @@ instance Arbitrary Direction where
 data PkgBinary =
   PkgBinary
 
+data PkgPersist =
+  PkgPersist
+
 data PkgCereal =
   PkgCereal
 
@@ -177,6 +184,12 @@ instance (B.Binary a, NFData a) => Serialize PkgBinary a where
   serialize _ = return . force . LBS.toStrict . B.encode
   {-# NOINLINE deserialize #-}
   deserialize _ = return . force . B.decode . LBS.fromStrict
+
+instance (R.Persist a, NFData a) => Serialize PkgPersist a where
+  {-# NOINLINE serialize #-}
+  serialize _ = return . force . R.encode
+  {-# NOINLINE deserialize #-}
+  deserialize _ = either error (return . force) . R.decode
 
 instance (C.Serialize a, NFData a) => Serialize PkgCereal a where
   {-# NOINLINE serialize #-}
@@ -221,6 +234,7 @@ pkgs ::
      , C.Serialize a
      , Typeable a
      , Serialise a
+     , R.Persist a
      , S.Store a
      , F.Flat a
      , B.Binary a
@@ -237,6 +251,7 @@ pkgs =
   , ("store", serialize PkgStore, deserialize PkgStore)
   , ("binary", serialize PkgBinary, deserialize PkgBinary)
   , ("cereal", serialize PkgCereal, deserialize PkgCereal)
+  , ("persist", serialize PkgPersist, deserialize PkgPersist)
   , ("packman", serialize PkgPackman, deserialize PkgPackman)
   , ("serialise", serialize PkgCBOR, deserialize PkgCBOR)
   , ("show", serialize PkgShow, deserialize PkgShow)
@@ -324,6 +339,7 @@ sizes ::
      , B.Binary t
      , F.Flat t
      , Serialise t
+     , R.Persist t
      , C.Serialize t
      , S.Store t,Show t, Read t
      )
@@ -344,6 +360,7 @@ benchs ::
      , B.Binary a
      , F.Flat a
      , Serialise a
+     , R.Persist a
      , C.Serialize a
      , S.Store a,Read a,Show a
      )
@@ -370,7 +387,7 @@ main
     -- runQC CBOR
  = do
   runBench
-    -- print $ S.encode [North, South] -- "\STX\NUL\NUL\NUL\NUL\NUL\NUL\NUL\NUL\SOH" 
+    -- print $ S.encode [North, South] -- "\STX\NUL\NUL\NUL\NUL\NUL\NUL\NUL\NUL\SOH"
     --                                 --  "\STX\NUL\NUL\NUL\NUL\NUL\NUL\NUL\NUL\SOH"
 
 fromRight :: Either a b -> b
