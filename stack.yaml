@@ -1,9 +1,7 @@
 system-ghc: false
 
-#resolver: lts-11.22
-
-# ghc 8.4.3
-resolver: lts-12.11
+# ghc 8.4.4
+resolver: lts-12.16
 
 # ghc 8.6.1
 #resolver: nightly-2018-10-03
@@ -18,11 +16,11 @@ flags:
      newtime15: true
 
 extra-deps:
-- flat-0.3.2
+- flat-0.3.4
 - persist-0.1
 - packman-0.5.0
 # - binary-0.8.5.1
 - cereal-0.5.7.0
-- store-0.5.0
-- serialise-0.2.0.0
+- store-0.5.0.1
+- serialise-0.2.1.0
 - datasets-0.2.1
