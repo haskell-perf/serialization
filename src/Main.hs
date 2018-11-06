@@ -1,42 +1,42 @@
-{-# LANGUAGE BangPatterns #-}
-{-# LANGUAGE DeriveAnyClass #-}
-{-# LANGUAGE DeriveDataTypeable #-}
-{-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE BangPatterns              #-}
+{-# LANGUAGE DeriveAnyClass            #-}
+{-# LANGUAGE DeriveDataTypeable        #-}
+{-# LANGUAGE DeriveGeneric             #-}
+{-# LANGUAGE FlexibleContexts          #-}
+{-# LANGUAGE FlexibleInstances         #-}
+{-# LANGUAGE LambdaCase                #-}
+{-# LANGUAGE MultiParamTypeClasses     #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
-{-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE TupleSections #-}
+{-# LANGUAGE ScopedTypeVariables       #-}
+{-# LANGUAGE TupleSections             #-}
 
 module Main where
 
-import Control.DeepSeq
-import qualified Data.ByteString as BS
+import           Codec.Serialise      as CBOR
+import           Control.DeepSeq
+import           Criterion.Types
+import qualified Data.Binary          as B
+import qualified Data.ByteString      as BS
 import qualified Data.ByteString.Lazy as LBS
-import qualified Data.Text as T
-import qualified Data.Text.Encoding as T
-import Data.Typeable
-import Criterion.Types
-import qualified Data.Binary as B
-import Codec.Serialise as CBOR
-import GHC.Generics
-import System.Mem (performMajorGC)
-import qualified Data.Flat as F
-import qualified Data.Serialize as C
-import qualified Data.Persist as R
-import qualified Data.Store as S
-import Dataset
-import qualified GHC.Packing as P
-import Report
-import Data.List
+import qualified Data.Flat            as F
+import           Data.List
+import qualified Data.Persist         as R
+import qualified Data.Serialize       as C
+import qualified Data.Store           as S
+import qualified Data.Text            as T
+import qualified Data.Text.Encoding   as T
+import           Data.Typeable
+import           Dataset
+import           GHC.Generics
+import qualified GHC.Packing          as P
+import           Report
+import           System.Mem           (performMajorGC)
 
 -- Testing and random data generation
-import Test.QuickCheck
+import           Test.QuickCheck
 
 -- Benchmarks
-import Criterion.Main
+import           Criterion.Main
 
 data BinTree a
   = Tree (BinTree a)
@@ -79,12 +79,12 @@ instance {-# OVERLAPPABLE #-} CBOR.Serialise a =>
 -- instance {-# OVERLAPPING #-} F.Flat [Iris]
 
 instance NFData a => NFData (BinTree a) where
-  rnf (Leaf a) = rnf a `seq` ()
+  rnf (Leaf a)          = rnf a `seq` ()
   rnf (Tree left right) = rnf left `seq` rnf right `seq` ()
 
 instance Arbitrary a => Arbitrary (BinTree a) where
   arbitrary = oneof [Leaf <$> arbitrary, Tree <$> arbitrary <*> arbitrary]
-  shrink Leaf {} = []
+  shrink Leaf {}           = []
   shrink (Tree left right) = [left, right] ++ shrink left ++ shrink right
 
 -- A simple enumeration
@@ -173,7 +173,7 @@ data PkgStore =
   PkgStore
 
 data PkgShow =
-    PkgShow  
+    PkgShow
 
 class Serialize lib a where
   serialize :: lib -> a -> IO BS.ByteString
@@ -313,7 +313,7 @@ runBench
     (defaultConfig {jsonFile = Just jsonReport, reportFile = Just htmlReport}) $
     tests
 
-  --deleteMeasures workDir
+  deleteMeasures workDir
 
   updateMeasures workDir
 
@@ -392,4 +392,4 @@ main
 
 fromRight :: Either a b -> b
 fromRight (Right v) = v
-fromRight (Left _) = error "Unexpected Left"
+fromRight (Left _)  = error "Unexpected Left"
