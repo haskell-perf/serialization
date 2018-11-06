@@ -254,7 +254,7 @@ pkgs =
   , ("persist", serialize PkgPersist, deserialize PkgPersist)
   , ("packman", serialize PkgPackman, deserialize PkgPackman)
   , ("serialise", serialize PkgCBOR, deserialize PkgCBOR)
-  , ("show", serialize PkgShow, deserialize PkgShow)
+  -- , ("show", serialize PkgShow, deserialize PkgShow)
   ]
 
 prop :: Serialize lib (BinTree Int) => lib -> Property
